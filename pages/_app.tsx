@@ -36,9 +36,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <TinybirdProvider api="https://api.tinybird.co" trackerURL={'https://storage.googleapis.com/tinybird-demo/tinybird-tracker.js'} dataSource={'events'} token={'p.eyJ1IjogIjE3YjNkMDUzLTNkMjUtNDczNS1hNGUzLTczOTg5YTkyM2M2OCIsICJpZCI6ICIwYWEyOGViNS0zYWJkLTQxNTEtODQyYS1iZGMwMzAzYzcwMjUifQ.dsgIM37qEy-VaMsScud9rNvG_aIQkiA85ZhB8kEHNIk'}>
       <Head />
-      <Data pipe="events_pipe" token="p.eyJ1IjogIjE3YjNkMDUzLTNkMjUtNDczNS1hNGUzLTczOTg5YTkyM2M2OCIsICJpZCI6ICIzMDRmMzlmYy02Y2RjLTRmNGItYmYzMS0wYTdmOTE0ZGE5NTgifQ.gvQiUmQ0sO8I8eED0Hcwgw7iKrfRcuDflzU7p7oBp1E">
+      <Data parameters={[{
+        name: 'whatever',
+        type: 'string',
+        defaultValue: 'hello'
+      }]} queryParameters={{ whatever: 'world' }} pipe="events_pipe" token="p.eyJ1IjogIjE3YjNkMDUzLTNkMjUtNDczNS1hNGUzLTczOTg5YTkyM2M2OCIsICJpZCI6ICJjZTdiZDMxYS02ZTgyLTQzNjEtOWFlOS1iZjNiZDlmNmY5N2UifQ.o71qdaU-KIEztj5l0rvs-arnJRcOd6B4z6NdINQzpl0">
         {(props: { data: Array<any>, error: string, meta: Array<any>, loading: Boolean }) => {
-          return <p>pepito {props.loading ? 'true' : 'false'} {props.data && props.data.length}</p>
+          return <p>events rows: {props.loading ? 'true' : 'false'} {props.data && props.data.length}</p>
         }}
       </Data>
       <ManagedUIContext>
