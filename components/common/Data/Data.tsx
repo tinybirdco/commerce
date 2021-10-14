@@ -34,7 +34,7 @@ export default function Data(props: {
       props.parameters.forEach(({ name, type, defaultValue = '' }) => {
         queryParams.append(
           name,
-          props.queryParameters && props.queryParameters[name] ? props.queryParameters[name] : defaultValue
+          props.queryParameters?.[name] || defaultValue
         )
       })
     }
