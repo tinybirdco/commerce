@@ -12,6 +12,10 @@ import Data from '@components/common/Data'
 
 const Noop: FC = ({ children }) => <>{children}</>
 
+const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API
+const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN
+const TRACKER_URL = process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_URL
+
 export default function MyApp({ Component, pageProps }: AppProps) {
   const Layout = (Component as any).Layout || Noop
   const router = useRouter()
@@ -35,10 +39,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <TinybirdProvider 
-      api="https://api.tinybird.co"
-      trackerURL={'https://raw.githack.com/tinybirdco/tinybird-tracker/json/dist/tinybird-tracker.js'}
+      api={API_URL}
+      trackerURL={TRACKER_URL}
       dataSource={'events'}
-      token={'p.eyJ1IjogIjE3YjNkMDUzLTNkMjUtNDczNS1hNGUzLTczOTg5YTkyM2M2OCIsICJpZCI6ICIwYWEyOGViNS0zYWJkLTQxNTEtODQyYS1iZGMwMzAzYzcwMjUifQ.dsgIM37qEy-VaMsScud9rNvG_aIQkiA85ZhB8kEHNIk'}
+      token={API_TOKEN}
     >
       <Head />
       <Data 
@@ -49,7 +53,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         }]} 
         queryParameters={{ whatever: 'world' }} 
         pipe="events_pipe" 
-        token="p.eyJ1IjogIjE3YjNkMDUzLTNkMjUtNDczNS1hNGUzLTczOTg5YTkyM2M2OCIsICJpZCI6ICJjZTdiZDMxYS02ZTgyLTQzNjEtOWFlOS1iZjNiZDlmNmY5N2UifQ.o71qdaU-KIEztj5l0rvs-arnJRcOd6B4z6NdINQzpl0"
+        host={API_URL}
+        token={API_TOKEN}
       >
         {(props: { data: Array<any>, error: string, meta: Array<any>, loading: Boolean }) => {
           return <p>events rows: {props.loading ? 'true' : 'false'} {props.data && props.data.length}</p>

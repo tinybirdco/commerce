@@ -1,7 +1,7 @@
 import useEffectOnUpdate from '@lib/hooks/useEffectOnUpdate'
 import { ReactNode, useEffect, useState } from 'react'
 
-const HOST = 'https://api.tinybird.co'
+const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API
 const PIPES_PATHNAME = '/v0/pipes'
 const DEFAULT_FORMAT = 'json'
 
@@ -25,7 +25,7 @@ export default function Data(props: {
     setError(false)
 
     const dataURL = new URL(
-      `${props.host || HOST}${PIPES_PATHNAME}/${props.pipe}.${props.format || DEFAULT_FORMAT}`
+      `${props.host || API_URL}${PIPES_PATHNAME}/${props.pipe}.${props.format || DEFAULT_FORMAT}`
     )
 
     let queryParams = new URLSearchParams(`token=${props.token}`)
