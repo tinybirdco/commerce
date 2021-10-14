@@ -34,13 +34,23 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   }, [])
 
   return (
-    <TinybirdProvider api="https://api.tinybird.co" trackerURL={'https://storage.googleapis.com/tinybird-demo/tinybird-tracker.js'} dataSource={'events'} token={'p.eyJ1IjogIjE3YjNkMDUzLTNkMjUtNDczNS1hNGUzLTczOTg5YTkyM2M2OCIsICJpZCI6ICIwYWEyOGViNS0zYWJkLTQxNTEtODQyYS1iZGMwMzAzYzcwMjUifQ.dsgIM37qEy-VaMsScud9rNvG_aIQkiA85ZhB8kEHNIk'}>
+    <TinybirdProvider 
+      api="https://api.tinybird.co"
+      trackerURL={'https://raw.githack.com/tinybirdco/tinybird-tracker/json/dist/tinybird-tracker.js'}
+      dataSource={'events'}
+      token={'p.eyJ1IjogIjE3YjNkMDUzLTNkMjUtNDczNS1hNGUzLTczOTg5YTkyM2M2OCIsICJpZCI6ICIwYWEyOGViNS0zYWJkLTQxNTEtODQyYS1iZGMwMzAzYzcwMjUifQ.dsgIM37qEy-VaMsScud9rNvG_aIQkiA85ZhB8kEHNIk'}
+    >
       <Head />
-      <Data parameters={[{
-        name: 'whatever',
-        type: 'string',
-        defaultValue: 'hello'
-      }]} queryParameters={{ whatever: 'world' }} pipe="events_pipe" token="p.eyJ1IjogIjE3YjNkMDUzLTNkMjUtNDczNS1hNGUzLTczOTg5YTkyM2M2OCIsICJpZCI6ICJjZTdiZDMxYS02ZTgyLTQzNjEtOWFlOS1iZjNiZDlmNmY5N2UifQ.o71qdaU-KIEztj5l0rvs-arnJRcOd6B4z6NdINQzpl0">
+      <Data 
+        parameters={[{
+          name: 'whatever',
+          type: 'string',
+          defaultValue: 'hello'
+        }]} 
+        queryParameters={{ whatever: 'world' }} 
+        pipe="events_pipe" 
+        token="p.eyJ1IjogIjE3YjNkMDUzLTNkMjUtNDczNS1hNGUzLTczOTg5YTkyM2M2OCIsICJpZCI6ICJjZTdiZDMxYS02ZTgyLTQzNjEtOWFlOS1iZjNiZDlmNmY5N2UifQ.o71qdaU-KIEztj5l0rvs-arnJRcOd6B4z6NdINQzpl0"
+      >
         {(props: { data: Array<any>, error: string, meta: Array<any>, loading: Boolean }) => {
           return <p>events rows: {props.loading ? 'true' : 'false'} {props.data && props.data.length}</p>
         }}
