@@ -56,7 +56,7 @@ export default function Data(props: {
 
   useEffectOnUpdate(() => {
     _fetchData()
-  }, [props.parameters])
+  }, [props.parameters, props.queryParameters])
 
   useEffect(() => {
     _fetchData()
