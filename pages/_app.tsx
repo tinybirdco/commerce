@@ -38,7 +38,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <Head />
       <Data pipe="events_pipe" token="p.eyJ1IjogIjE3YjNkMDUzLTNkMjUtNDczNS1hNGUzLTczOTg5YTkyM2M2OCIsICJpZCI6ICIzMDRmMzlmYy02Y2RjLTRmNGItYmYzMS0wYTdmOTE0ZGE5NTgifQ.gvQiUmQ0sO8I8eED0Hcwgw7iKrfRcuDflzU7p7oBp1E">
         {(props: { data: Array<any>, error: string, meta: Array<any>, loading: Boolean }) => {
-          return <p>pepito {props.loading} {props.data && props.data.length}</p>
+          return <p>pepito {props.loading ? 'true' : 'false'} {props.data && props.data.length}</p>
         }}
       </Data>
       <ManagedUIContext>
