@@ -12,7 +12,7 @@ export default function Data(props: {
   format?: string
   sql?: string
   parameters?: Array<{ name: string, type: string, defaultValue?: string }>
-  queryParameters?: Object
+  queryParameters?: Record<string, string>
   children: ReactNode | ReactNode[]
 }) {
   const [loading, setLoading] = useState(false)
