@@ -78,7 +78,11 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
                 {(props: { data: Array<any>, error: string, meta: Array<any>, loading: Boolean }) => {
                   return props && props.data && <ProductSlider key={product.id}>
                     {props.data.map((image, i) => (
-                      <div key={image.url} className={s.imageContainer} data-image={image.url} data-product={product.id}>
+                      <div key={image.url} 
+                        className={s.imageContainer}
+                        data-image={image.url}
+                        data-product={product.id}>
+
                         <Image
                           className={s.img}
                           src={image.url}

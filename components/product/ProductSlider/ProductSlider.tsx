@@ -121,7 +121,10 @@ const ProductSlider: React.FC<ProductSliderProps> = ({
                   }),
                   id: `thumb-${idx}`,
                   onClick: () => {
-                    tinybird('click-product-image', {url: child.props['data-image'], product: child.props['data-product']})
+                    tinybird('click-product-image', {
+                      url: child.props['data-image'],
+                      product: child.props['data-product']
+                    })
                     slider.moveToSlideRelative(idx)
                   },
                 },
