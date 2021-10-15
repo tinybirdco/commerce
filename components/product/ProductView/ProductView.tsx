@@ -2,7 +2,7 @@ import cn from 'classnames'
 import Image from 'next/image'
 import { NextSeo } from 'next-seo'
 import s from './ProductView.module.css'
-import { FC } from 'react'
+import { useCallback, FC } from 'react'
 import type { Product } from '@commerce/types/product'
 import usePrice from '@framework/product/use-price'
 import { WishlistButton } from '@components/wishlist'
@@ -11,6 +11,7 @@ import { Container, Text } from '@components/ui'
 import Data from '@components/common/Data'
 import ProductSidebar from '../ProductSidebar'
 import ProductTag from '../ProductTag'
+
 interface ProductViewProps {
   product: Product
   relatedProducts: Product[]
@@ -33,23 +34,72 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
               price={`${price} ${product.price?.currencyCode}`}
               fontSize={32}
             />
-            <div className={s.sliderContainer}>
 
-            {/* <Data
-              parameters={[{
-                name: 'product_id',
-                type: 'string',
-                defaultValue: ''
-              }]}
-              queryParameters={{ product_id: product.id }} 
-              pipe="get_most_clicked_image" >
-              {(props: { data: Array<any>, error: string, meta: Array<any>, loading: Boolean }) => {
-                return <ProductSlider key={product.id}>
-                  {props && props.data && props.data.map((image, i) => (
-                    <div key={image.meta_image} className={s.imageContainer}>
+            <div className={s.sliderContainer}>
+              {/* Second Step */}
+
+              {/* <Data
+                parameters={[{
+                  name: 'product_id',
+                  type: 'string',
+                  defaultValue: ''
+                }]}
+                queryParameters={{ product_id: product.id }} 
+                pipe="get_most_clicked_image" >
+                {(props: { data: Array<any>, error: string, meta: Array<any>, loading: Boolean }) => {
+                  return props && props.data && <ProductSlider key={product.id}>
+                    {props.data.map((image, i) => (
+                      <div key={image.meta_image} className={s.imageContainer} data-image={image.meta_image}>
+                        <Image
+                          className={s.img}
+                          src={`/assets/${image.meta_image}.jpg`}
+                          alt={image.alt || 'Product Image'}
+                          width={600}
+                          height={600}
+                          priority={i === 0}
+                          quality="85"
+                        />
+                      </div>
+                    ))}
+                  </ProductSlider>
+                }}
+              </Data> */}
+
+              {/* First Step */}
+
+              <Data
+                parameters={[{
+                  name: 'product_id',
+                  type: 'string',
+                  defaultValue: ''
+                }]}
+                queryParameters={{ product_id: product.id }}
+                pipe="get_most_clicked_image" >
+                {(props: { data: Array<any>, error: string, meta: Array<any>, loading: Boolean }) => {
+                  return props && props.data && <ProductSlider key={product.id}>
+                    {props.data.map((image, i) => (
+                      <div key={image.url} className={s.imageContainer} data-image={image.url} data-product={product.id}>
+                        <Image
+                          className={s.img}
+                          src={image.url}
+                          alt={image.alt || 'Product Image'}
+                          width={600}
+                          height={600}
+                          priority={i === 0}
+                          quality="85"
+                        />
+                      </div>
+                    ))}
+                  </ProductSlider>
+                }}
+              </Data>
+                {/* Default */}
+                {/* <ProductSlider key={product.id}>
+                  {product.images.map((image, i) => (
+                    <div key={image.url} className={s.imageContainer} data-image={image.url} data-product={product.id}>
                       <Image
                         className={s.img}
-                        src={`/assets/${image.meta_image}.jpg`}
+                        src={image.url!}
                         alt={image.alt || 'Product Image'}
                         width={600}
                         height={600}
@@ -58,46 +108,12 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
                       />
                     </div>
                   ))}
-                </ProductSlider>
-              }}
-            </Data> */}
-
-              <ProductSlider key={product.id}>
-                {product.images.map((image, i) => (
-                  <div key={image.url} className={s.imageContainer}>
-                    <Image
-                      className={s.img}
-                      src={image.url!}
-                      alt={image.alt || 'Product Image'}
-                      width={600}
-                      height={600}
-                      priority={i === 0}
-                      quality="85"
-                    />
-                  </div>
-                ))}
-              </ProductSlider>
+                </ProductSlider> */}
             </div>
-            {process.env.COMMERCE_WISHLIST_ENABLED && (
-              <WishlistButton
-                className={s.wishlistButton}
-                productId={product.id}
-                variant={product.variants[0]}
-              />
-            )}
-
-            </div>
-            {process.env.COMMERCE_WISHLIST_ENABLED && (
-              <WishlistButton
-                className={s.wishlistButton}
-                productId={product.id}
-                variant={product.variants[0]}
-              />
-            )}
           </div>
-
           <ProductSidebar key={product.id} product={product} className={s.sidebar} />
         </div>
+     
         <hr className="mt-7 border-accent-2" />
         <section className="py-12 px-6 mb-10">
           <Text variant="sectionHeading">Related Products</Text>

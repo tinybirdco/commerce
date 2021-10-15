@@ -5,6 +5,7 @@ import { ProductOptions } from '@components/product'
 import type { Product } from '@commerce/types/product'
 import { Button, Text, Rating, Collapse, useUI } from '@components/ui'
 import Data from '@components/common/Data'
+
 import {
   getProductVariant,
   selectDefaultOptionFromProduct,
