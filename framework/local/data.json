@@ -342,7 +342,7 @@
       ],
       "variants": [
         {
-          "id": "product-2",
+          "id": "product-4",
           "options": [
             {
               "__typename": "MultipleChoiceOption",
@@ -409,7 +409,7 @@
       ],
       "variants": [
         {
-          "id": "product-2",
+          "id": "product-5",
           "options": [
             {
               "__typename": "MultipleChoiceOption",
@@ -447,7 +447,7 @@
       ]
     },
     {
-      "id": "product-6",
+      "id": "product-7",
       "name": "Premium Coat",
       "vendor": "Next.js",
       "path": "/premium-coat",
@@ -476,7 +476,7 @@
       ],
       "variants": [
         {
-          "id": "product-5",
+          "id": "product-7",
           "options": [
             {
               "__typename": "MultipleChoiceOption",
