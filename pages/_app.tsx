@@ -20,21 +20,21 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
   const tinybird = useTinybird()
   
-  useEffect(() => {
-    tinybird('pageload', { url: router.pathname })
+  // useEffect(() => {
+  //   tinybird('pageload', { url: router.pathname })
 
-    const handleRouteChange = (url: string) => {
-      tinybird('pageload', { url })
-    }
+  //   const handleRouteChange = (url: string) => {
+  //     tinybird('pageload', { url })
+  //   }
 
-    router.events.on('routeChangeStart', handleRouteChange)
+  //   router.events.on('routeChangeStart', handleRouteChange)
 
-    document.body.classList?.remove('loading')
+  //   document.body.classList?.remove('loading')
 
-    return () => {
-      router.events.off('routeChangeStart', handleRouteChange)
-    }
-  }, [])
+  //   return () => {
+  //     router.events.off('routeChangeStart', handleRouteChange)
+  //   }
+  // }, [])
 
   return (
     <TinybirdProvider 
