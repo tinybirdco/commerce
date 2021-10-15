@@ -4,10 +4,10 @@ import 'keen-slider/keen-slider.min.css'
 
 import { FC, useEffect } from 'react'
 import type { AppProps } from 'next/app'
+import { useRouter } from 'next/router'
 import { Head } from '@components/common'
 import { ManagedUIContext } from '@components/ui/context'
 import TinybirdProvider, { useTinybird } from 'next-tinybird'
-import { useRouter } from 'next/router'
 
 const Noop: FC = ({ children }) => <>{children}</>
 
