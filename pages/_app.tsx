@@ -8,7 +8,6 @@ import { useRouter } from 'next/router'
 import { Head } from '@components/common'
 import { ManagedUIContext } from '@components/ui/context'
 import TinybirdProvider, { useTinybird } from 'next-tinybird'
-import Data from '@components/common/Data'
 
 const Noop: FC = ({ children }) => <>{children}</>
 
@@ -45,21 +44,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       token={API_TOKEN}
     >
       <Head />
-      <Data 
-        parameters={[{
-          name: 'whatever',
-          type: 'string',
-          defaultValue: 'hello'
-        }]} 
-        queryParameters={{ whatever: 'world' }} 
-        pipe="events_pipe" 
-        host={API_URL}
-        token={API_TOKEN}
-      >
-        {(props: { data: Array<any>, error: string, meta: Array<any>, loading: Boolean }) => {
-          return <p>events rows: {props.loading ? 'true' : 'false'} {props.data && props.data.length}</p>
-        }}
-      </Data>
       <ManagedUIContext>
         <Layout pageProps={pageProps}>
           <Component {...pageProps} />
