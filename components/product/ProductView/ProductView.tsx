@@ -8,6 +8,7 @@ import usePrice from '@framework/product/use-price'
 import { WishlistButton } from '@components/wishlist'
 import { ProductSlider, ProductCard } from '@components/product'
 import { Container, Text } from '@components/ui'
+import Data from '@components/common/Data'
 import ProductSidebar from '../ProductSidebar'
 import ProductTag from '../ProductTag'
 interface ProductViewProps {
@@ -33,6 +34,34 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
               fontSize={32}
             />
             <div className={s.sliderContainer}>
+
+            {/* <Data
+              parameters={[{
+                name: 'product_id',
+                type: 'string',
+                defaultValue: ''
+              }]}
+              queryParameters={{ product_id: product.id }} 
+              pipe="get_most_clicked_image" >
+              {(props: { data: Array<any>, error: string, meta: Array<any>, loading: Boolean }) => {
+                return <ProductSlider key={product.id}>
+                  {props && props.data && props.data.map((image, i) => (
+                    <div key={image.meta_image} className={s.imageContainer}>
+                      <Image
+                        className={s.img}
+                        src={`/assets/${image.meta_image}.jpg`}
+                        alt={image.alt || 'Product Image'}
+                        width={600}
+                        height={600}
+                        priority={i === 0}
+                        quality="85"
+                      />
+                    </div>
+                  ))}
+                </ProductSlider>
+              }}
+            </Data> */}
+
               <ProductSlider key={product.id}>
                 {product.images.map((image, i) => (
                   <div key={image.url} className={s.imageContainer}>
@@ -48,6 +77,15 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
                   </div>
                 ))}
               </ProductSlider>
+            </div>
+            {process.env.COMMERCE_WISHLIST_ENABLED && (
+              <WishlistButton
+                className={s.wishlistButton}
+                productId={product.id}
+                variant={product.variants[0]}
+              />
+            )}
+
             </div>
             {process.env.COMMERCE_WISHLIST_ENABLED && (
               <WishlistButton
