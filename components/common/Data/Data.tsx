@@ -15,8 +15,8 @@ export default function Data(props: {
   queryParameters?: Record<string, string>
   children: ReactNode | ReactNode[]
 }) {
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(null)
+  const [error, setError] = useState(null)
   const [data, setData] = useState(null)
   const [meta, setMeta] = useState(null)
 
