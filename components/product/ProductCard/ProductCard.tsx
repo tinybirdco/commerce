@@ -50,10 +50,9 @@ const ProductCard: FC<Props> = ({
                 quality="85"
                 src={product.images[0]?.url || placeholderImg}
                 alt={product.name || 'Product Image'}
-                height={320}
                 width={320}
+                height={320}
                 layout="fixed"
-                {...imgProps}
               />
             )}
           </>

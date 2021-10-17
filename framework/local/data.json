@@ -134,6 +134,18 @@
           "altText": "Simple Hoodie",
           "width": 1000,
           "height": 1000
+        },
+        {
+          "url": "/assets/simple-pull-5.jpg",
+          "altText": "Simple Hoodie",
+          "width": 1000,
+          "height": 1000
+        },
+        {
+          "url": "/assets/simple-pull-6.jpg",
+          "altText": "Simple Hoodie",
+          "width": 1000,
+          "height": 1000
         }
       ],
       "variants": [

@@ -67,7 +67,7 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
 
               {/* First Step */}
 
-              <Data
+              {/* <Data
                 parameters={[{
                   name: 'product_id',
                   type: 'string',
@@ -96,9 +96,9 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
                     ))}
                   </ProductSlider>
                 }}
-              </Data>
+              </Data> */}
                 {/* Default */}
-                {/* <ProductSlider key={product.id}>
+                <ProductSlider key={product.id}>
                   {product.images.map((image, i) => (
                     <div key={image.url} className={s.imageContainer} data-image={image.url} data-product={product.id}>
                       <Image
@@ -112,7 +112,7 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
                       />
                     </div>
                   ))}
-                </ProductSlider> */}
+                </ProductSlider>
             </div>
           </div>
           <ProductSidebar key={product.id} product={product} className={s.sidebar} />

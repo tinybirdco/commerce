@@ -54,7 +54,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
         html={product.descriptionHtml || product.description}
       />
       <div className="flex flex-row justify-between items-center">
-        {/* <Data
+        <Data
             parameters={[{
               name: 'product_id',
               type: 'string',
@@ -62,14 +62,18 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
             }]}
             queryParameters={{ product_id: product.id }} 
             pipe="get_total_views" >
-            {(props: { data: Array<any>, error: string, meta: Array<any>, loading: Boolean }) => {
+            {(props: {
+              data: Array<any>,
+              error: string,
+              meta: Array<any>,
+              loading: Boolean }) => {
               return <div>
                 {props && props.data && props.data.map((data, i) => (
                   <div key={`product-data-${i}`} className="text-accent-6 pr-1 font-medium text-m">{data.total} views</div>
                 ))}
               </div>
             }}
-          </Data> */}
+          </Data>
       </div>
       <div>
         {process.env.COMMERCE_CART_ENABLED && (
