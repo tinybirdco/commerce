@@ -55,8 +55,6 @@ export default function Admin({ categories, brands }: SearchPropsType) {
     return null
   }
 
-  console.log('render admin page')
-
   return (
     <Container>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mt-3 mb-20">
