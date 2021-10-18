@@ -110,10 +110,7 @@ export default function Admin({ categories, brands }: SearchPropsType) {
             handleClick={handleClick} 
             toggleFilter={toggleFilter}
           />
-          <Devices
-            devices={devices}
-            currentParams={router.query}
-          />
+          <Devices {...router.query} />
           <Sort
             sort={sort}
             activeFilter={activeFilter} 

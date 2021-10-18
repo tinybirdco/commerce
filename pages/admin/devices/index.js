@@ -1,3 +1,5 @@
+import useEffectOnUpdate from '@lib/hooks/useEffectOnUpdate'
+import { useState } from 'react'
 import Data from '@components/common/Data'
 import DevicesDonut from './donut'
 
@@ -16,7 +18,36 @@ export const DEVICES = {
   },
 }
 
-export default function Devices({ devices }) {
+export default function Devices({ range, devices, category, size, color }) {
+  const [parameters] = useState([
+    { name: 'category', type: 'string' },
+    { name: 'color', type: 'string' },
+    { name: 'devices', type: 'string' },
+    { name: 'size', type: 'string' },
+    { name: 'month', type: 'string' },
+    { name: 'week', type: 'string' },
+  ])
+  const [queryParameters, setQueryParameters] = useState(genParams())
+
+  function genParams() {
+    let obj = {
+      devices,
+      category,
+      size,
+      color,
+    }
+
+    if (range) {
+      obj[range] = 1
+    }
+
+    return obj
+  }
+
+  useEffectOnUpdate(() => {
+    setQueryParameters(genParams())
+  }, [devices, category, size, range, color])
+
   return (
     <div className="mb-10 block text-sm leading-5 text-accent-4 lg:text-base lg:no-underline lg:font-bold lg:tracking-wide">
       <h3 className={'block lg:block px-4 py-2 lg:p-0 lg:my-2 lg:mx-4'}>
@@ -28,8 +59,8 @@ export default function Devices({ devices }) {
           host={API_URL}
           token={API_TOKEN}
           pipe={'get_devices_usage'}
-          parameters={[{ name: 'month', type: 'string', defaultValue: 1 }]}
-          queryParameters={null}
+          parameters={parameters}
+          queryParameters={queryParameters}
         >
           {(state) => <DevicesDonut devices={devices} {...state} />}
         </Data>
