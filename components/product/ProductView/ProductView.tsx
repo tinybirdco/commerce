@@ -24,6 +24,21 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
     currencyCode: product.price.currencyCode!,
   })
 
+  const getSortedImages = (data) => {
+    const defaultRanking = product.images.length - data.length
+    
+    return product.images
+      .map((image) => {
+          const index = data.findIndex((rankingImage) => rankingImage.url === image.url)
+
+          return {
+            ...image,
+            ranking: index >= 0 ? index + 1 : defaultRanking
+          }
+      })
+      .sort((a, b) => a.ranking - b.ranking)
+  }
+
   return (
     <>
       <Container className="max-w-none w-full" clean>
@@ -36,38 +51,7 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
             />
 
             <div className={s.sliderContainer}>
-              {/* Second Step */}
-
-              {/* <Data
-                parameters={[{
-                  name: 'product_id',
-                  type: 'string',
-                  defaultValue: ''
-                }]}
-                queryParameters={{ product_id: product.id }} 
-                pipe="get_most_clicked_image" >
-                {(props: { data: Array<any>, error: string, meta: Array<any>, loading: Boolean }) => {
-                  return props && props.data && <ProductSlider key={product.id}>
-                    {props.data.map((image, i) => (
-                      <div key={image.meta_image} className={s.imageContainer} data-image={image.meta_image}>
-                        <Image
-                          className={s.img}
-                          src={`/assets/${image.meta_image}.jpg`}
-                          alt={image.alt || 'Product Image'}
-                          width={600}
-                          height={600}
-                          priority={i === 0}
-                          quality="85"
-                        />
-                      </div>
-                    ))}
-                  </ProductSlider>
-                }}
-              </Data> */}
-
-              {/* First Step */}
-
-              {/* <Data
+              <Data
                 parameters={[{
                   name: 'product_id',
                   type: 'string',
@@ -76,8 +60,12 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
                 queryParameters={{ product_id: product.id }}
                 pipe="get_most_clicked_image" >
                 {(props: { data: Array<any>, error: string, meta: Array<any>, loading: Boolean }) => {
-                  return props && props.data && <ProductSlider key={product.id}>
-                    {props.data.map((image, i) => (
+                  const sortedImages = props && props.data
+                    ? getSortedImages(props.data)
+                    : product.images
+ 
+                  return <ProductSlider key={product.id}>
+                    {sortedImages.map((image, i) => (
                       <div key={image.url} 
                         className={s.imageContainer}
                         data-image={image.url}
@@ -96,9 +84,9 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
                     ))}
                   </ProductSlider>
                 }}
-              </Data> */}
+              </Data>
                 {/* Default */}
-                <ProductSlider key={product.id}>
+                {/* <ProductSlider key={product.id}>
                   {product.images.map((image, i) => (
                     <div key={image.url} className={s.imageContainer} data-image={image.url} data-product={product.id}>
                       <Image
@@ -112,7 +100,7 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
                       />
                     </div>
                   ))}
-                </ProductSlider>
+                </ProductSlider> */}
             </div>
           </div>
           <ProductSidebar key={product.id} product={product} className={s.sidebar} />
