@@ -1,9 +1,16 @@
 import { useState, useRef, useEffect } from 'react'
 import { group } from 'd3'
 import * as echarts from 'echarts'
-import { DEVICES } from './devices'
+import { DEVICES } from '../devices'
 
-export default function SalesChart({ range, meta, loading, data, error }) {
+export default function SalesChart({
+  range,
+  devices,
+  meta,
+  loading,
+  data,
+  error,
+}) {
   const options = {
     tooltip: {
       trigger: 'axis',
@@ -52,6 +59,11 @@ export default function SalesChart({ range, meta, loading, data, error }) {
         xAxis: {
           data: [],
         },
+      }
+
+      // Preventing endpoint error
+      if (!data || error) {
+        return
       }
 
       const groupedData = group(data, (d) => d['device'])

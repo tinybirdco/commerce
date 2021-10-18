@@ -9,10 +9,9 @@ import Products from './products'
 import Filter from './filter'
 import Sort from './sort'
 import Dates from './dates'
-import SalesChart from './sales-chart'
-import Data from '@components/common/Data'
 import Devices from './devices'
 import Metrics from './metrics'
+import Sales from './sales'
 
 const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API
 const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN
@@ -97,24 +96,8 @@ export default function Admin({ categories, brands }: SearchPropsType) {
         
         <div className="col-span-8 order-3 lg:order-none">
           <Metrics currentParams={router.query}/>
-
-          <div className="block text-sm leading-5 text-accent-4 lg:text-base lg:no-underline lg:font-bold lg:tracking-wide mt-20">
-            <h3 className={'block lg:inline-block py-4 '}>
-              Sales
-            </h3>
-          </div>
-
-          <Data
-            host={API_URL}
-            token={API_TOKEN}
-            pipe={'get_sales_period'}
-            parameters={[{ name: 'month', type: 'string', defaultValue: 1 }]}
-            queryParameters={null}
-          >
-            {state => <SalesChart range={range} {...state} />}
-          </Data>
-
-          <Products />
+          <Sales currentParams={router.query}/>
+          <Products currentParams={router.query} />
         </div>
 
         <div className="col-span-8 lg:col-span-2 order-2 lg:order-none">

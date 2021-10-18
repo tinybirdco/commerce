@@ -2,10 +2,10 @@ import cn from 'classnames'
 import Link from '@components/ui/Link'
 
 const SORT = {
-  'price-asc': 'Price: Low to high',
-  'price-desc': 'Price: High to low',
-  'sales-asc': 'Sales: Low to high',
-  'sales-desc': 'Sales: High to low',
+  price_asc: 'Price: Low to high',
+  price_desc: 'Price: High to low',
+  sales_asc: 'Sales: Low to high',
+  sales_desc: 'Sales: High to low',
 }
 
 export default function Sort({
