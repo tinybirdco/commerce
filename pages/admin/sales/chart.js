@@ -56,46 +56,51 @@ export default function SalesChart({
     if (chart) {
       const obj = {
         series: [],
+        yAxis: {
+          show: true,
+        },
         xAxis: {
           data: [],
+          show: true,
         },
       }
+      let opts = {}
 
       // Preventing endpoint error
-      if (!data || error) {
-        return
-      }
+      if (!data || !data.length || error) {
+        opts = { replaceMerge: ['xAxis', 'yAxis', 'series'] }
+      } else {
+        const groupedData = group(data, (d) => d['device'])
+        const devicesKeys = Array.from(groupedData.keys())
 
-      const groupedData = group(data, (d) => d['device'])
-      const devicesKeys = Array.from(groupedData.keys())
+        const groupedByTime = group(data, (d) => d['date'])
+        const timeKeys = Array.from(groupedByTime.keys())
 
-      const groupedByTime = group(data, (d) => d['date'])
-      const timeKeys = Array.from(groupedByTime.keys())
+        obj['xAxis']['data'] = timeKeys
 
-      obj['xAxis']['data'] = timeKeys
+        obj['series'] = devicesKeys.map((device) => {
+          const data = timeKeys.map((date) => {
+            const row = groupedByTime.get(date).find((r) => r.device === device)
+            if (row) {
+              return row.total_sales
+            } else {
+              return null
+            }
+          })
 
-      obj['series'] = devicesKeys.map((device) => {
-        const data = timeKeys.map((date) => {
-          const row = groupedByTime.get(date).find((r) => r.device === device)
-          if (row) {
-            return row.total_sales
-          } else {
-            return null
+          return {
+            name: device,
+            type: 'bar',
+            stack: 'total',
+            itemStyle: {
+              color: DEVICES[device]?.color,
+            },
+            data,
           }
         })
+      }
 
-        return {
-          name: device,
-          type: 'bar',
-          stack: 'total',
-          itemStyle: {
-            color: DEVICES[device]?.color,
-          },
-          data,
-        }
-      })
-
-      chart.setOption(obj)
+      chart.setOption(obj, opts)
     }
   }
 
@@ -103,7 +108,7 @@ export default function SalesChart({
     function () {
       _updateSource()
     },
-    [data, meta]
+    [data]
   )
 
   useEffect(
