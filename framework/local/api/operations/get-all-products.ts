@@ -30,18 +30,20 @@ export default function getAllProductsOperation({
       .then(response => response.json())
       .then(data => data)
       .catch(err => ({ error: err.toString() }))
+    
+    const defaultRanking = data.products.length - res.data.length
 
     const productsRanking = data.products.map((product) => {
-      const ranking = res.data.findIndex((productRanking => productRanking.slug === product.slug))
+      const index = res.data.findIndex((productRanking => productRanking.slug === product.slug))
 
       return {
         ...product,
-        ranking: ranking > 0 ? ranking : 0
+        ranking: index >= 0 ? index + 1 : defaultRanking
       }
     })
 
     const sortedProducts = productsRanking.sort((a, b) => {
-      return b.ranking - a.ranking
+      return a.ranking - b.ranking
     })
 
     return {
