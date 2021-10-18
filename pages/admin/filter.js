@@ -75,7 +75,10 @@ export default function Filter({
                   }
                 )}
               >
-                <Link href={{ pathname: '/admin', query: resetFilter }}>
+                <Link
+                  href={{ pathname: '/admin', query: resetFilter }}
+                  scroll={false}
+                >
                   <a
                     onClick={(e) => handleClick(e, filterName)}
                     className={
@@ -109,6 +112,7 @@ export default function Filter({
                           pathname: '/admin',
                           query: queryParams,
                         }}
+                        scroll={false}
                       >
                         <a
                           onClick={(e) => handleClick(e, filterName)}

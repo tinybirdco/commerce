@@ -71,6 +71,7 @@ export default function Dates({
                         range: null,
                       },
                     }}
+                    scroll={false}
                   >
                     <a
                       onClick={(e) => handleClick(e, 'range')}
@@ -101,6 +102,7 @@ export default function Dates({
                           range: key,
                         },
                       }}
+                      scroll={false}
                     >
                       <a
                         onClick={(e) => handleClick(e, 'range')}

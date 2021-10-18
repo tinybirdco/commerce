@@ -71,6 +71,7 @@ export default function Sort({
                       sort: null,
                     },
                   }}
+                  scroll={false}
                 >
                   <a
                     onClick={(e) => handleClick(e, 'sort')}
@@ -101,6 +102,7 @@ export default function Sort({
                         sort: key,
                       },
                     }}
+                    scroll={false}
                   >
                     <a
                       onClick={(e) => handleClick(e, 'sort')}
