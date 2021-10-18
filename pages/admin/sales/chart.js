@@ -70,9 +70,7 @@ export default function SalesChart({
       if (!data || !data.length || error) {
         opts = { replaceMerge: ['xAxis', 'yAxis', 'series'] }
       } else {
-        const groupedData = group(data, (d) => d['device'])
-        const devicesKeys = Array.from(groupedData.keys())
-
+        const devicesKeys = Object.keys(DEVICES)
         const groupedByTime = group(data, (d) => d['date'])
         const timeKeys = Array.from(groupedByTime.keys())
 
