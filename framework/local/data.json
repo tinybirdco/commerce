@@ -108,7 +108,7 @@
       "vendor": "Next.js",
       "path": "/simple-pull",
       "slug": "simple-pull",
-      "price": { "value": 165, "currencyCode": "USD" },
+      "price": { "value": 49.99, "currencyCode": "USD" },
       "descriptionHtml": "<p><span>Description.</span></p>",
       "images": [
         {
@@ -228,7 +228,7 @@
       "vendor": "Next.js",
       "path": "/simple-t-shirt",
       "slug": "simple-t-shirt",
-      "price": { "value": 165, "currencyCode": "USD" },
+      "price": { "value": 19.99, "currencyCode": "USD" },
       "descriptionHtml": "<p><span>Description.</span></p>",
       "images": [
         {
@@ -330,7 +330,7 @@
       "vendor": "Next.js",
       "path": "/black-glasses",
       "slug": "black-glasses",
-      "price": { "value": 165, "currencyCode": "USD" },
+      "price": { "value": 123.59, "currencyCode": "USD" },
       "descriptionHtml": "<p><span>Description.</span></p>",
       "images": [
         {
@@ -397,7 +397,7 @@
       "vendor": "Next.js",
       "path": "/green-glasses",
       "slug": "green-glasses",
-      "price": { "value": 165, "currencyCode": "USD" },
+      "price": { "value": 184.99, "currencyCode": "USD" },
       "descriptionHtml": "<p><span>Description.</span></p>",
       "images": [
         {
@@ -464,7 +464,7 @@
       "vendor": "Next.js",
       "path": "/premium-coat",
       "slug": "premium-coat",
-      "price": { "value": 165, "currencyCode": "USD" },
+      "price": { "value": 209.99, "currencyCode": "USD" },
       "descriptionHtml": "<p><span>Description.</span></p>",
       "images": [
         {
@@ -551,7 +551,7 @@
       "vendor": "Next.js",
       "path": "/premium-parka",
       "slug": "premium-parka",
-      "price": { "value": 165, "currencyCode": "USD" },
+      "price": { "value": 194.99, "currencyCode": "USD" },
       "descriptionHtml": "<p><span>Description.</span></p>",
       "images": [
         {

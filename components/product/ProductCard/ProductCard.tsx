@@ -72,6 +72,11 @@ const ProductCard: FC<Props> = ({
                 <h3 className={s.name}>
                   <span>{product.name}</span>
                 </h3>
+                {!!product.ranking && (
+                  <div>
+                    {`TOP #${product.ranking}`}
+                  </div>
+                )}
                 <div className={s.price}>
                   {`${price} ${product.price?.currencyCode}`}
                 </div>
@@ -104,7 +109,7 @@ const ProductCard: FC<Props> = ({
               />
             )}
             <ProductTag
-              name={product.name}
+              name={!!product.ranking ? `TOP #${product.ranking} ${product.name}` : product.name}
               price={`${price} ${product.price?.currencyCode}`}
             />
             <div className={s.imageContainer}>
