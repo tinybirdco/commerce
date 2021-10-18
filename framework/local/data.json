@@ -294,13 +294,13 @@
           "values": [
             {
               "label": "white",
-              "hexColors": ["#222"]
+              "hexColors": ["#fff"]
             }, {
               "label": "dark green",
-              "hexColors": ["#222"]
+              "hexColors": ["#4e4744"]
             }, {
               "label": "pink",
-              "hexColors": ["#222"]
+              "hexColors": ["#d48b90"]
             }, {
               "label": "black",
               "hexColors": ["#222"]
