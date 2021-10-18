@@ -14,7 +14,7 @@ export default function Metrics({ currentParams }) {
   return (
     <div className="col-span-8 order-3 lg:order-none">
       <div className="block text-sm leading-5 text-accent-4 lg:text-base lg:no-underline lg:font-bold lg:tracking-wide">
-        <h3 className={'block lg:inline-block my-4'}>Metrics</h3>
+        <h3 className={'block lg:inline-block my-4'}>Main Metrics</h3>
       </div>
 
       <div className="block">
