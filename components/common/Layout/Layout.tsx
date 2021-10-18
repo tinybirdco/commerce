@@ -96,15 +96,23 @@ const Layout: FC<Props> = ({
 }) => {
   const { acceptedCookies, onAcceptCookies } = useAcceptCookies()
   const { locale = 'en-US' } = useRouter()
-  const navBarlinks = categories.slice(0, 2).map((c) => ({
-    label: c.name,
-    href: `/search/${c.slug}`,
-  }))
+  const navBarlinks = function () {
+    let defaultLinks = categories
+      .slice(0, 2)
+      .map((c) => ({
+        label: c.name,
+        href: `/search/${c.slug}`,
+      }))
+
+    defaultLinks.push({ label: 'Admin', href: '/admin' })
+
+    return defaultLinks
+  }
 
   return (
     <CommerceProvider locale={locale}>
       <div className={cn(s.root)}>
-        <Navbar links={navBarlinks} />
+        <Navbar links={navBarlinks()} />
         <main className="fit">{children}</main>
         <Footer pages={pageProps.pages} />
         <ModalUI />

@@ -12,6 +12,12 @@ export default function Filter({
   activeFilter,
   toggleFilter,
 }) {
+  let resetFilter = {
+    ...currentParams,
+  }
+
+  resetFilter[filterName] = ''
+
   return (
     <div className="relative inline-block w-full">
       <div className="lg:hidden">
@@ -69,7 +75,7 @@ export default function Filter({
                   }
                 )}
               >
-                <Link href={{ pathname: '/admin' }}>
+                <Link href={{ pathname: '/admin', query: resetFilter }}>
                   <a
                     onClick={(e) => handleClick(e, filterName)}
                     className={
