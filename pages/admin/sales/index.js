@@ -11,12 +11,12 @@ export default function Sales({ currentParams }) {
     rest[range] = 1
   }
 
-  console.log(rest)
-
   return (
     <>
       <div className="block text-sm leading-5 text-accent-4 lg:text-base lg:no-underline lg:font-bold lg:tracking-wide mt-20">
-        <h3 className={'block lg:inline-block py-4 '}>Sales graph</h3>
+        <h3 className={'block lg:inline-block py-4 '}>
+          {`Last ${range} sales`}
+        </h3>
       </div>
 
       <Data
