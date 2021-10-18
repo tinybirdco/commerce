@@ -22,11 +22,17 @@ export default function MetricsItem({
     opts['formattingFn'] = formatter
   }
 
+  const diffValue = value / prevValue - 1
+
   return (
     <div className="block">
       <h4 className="text-xs font-medium">{title}</h4>
       <CountUp {...opts} />
-      <span>{prevValue}</span>
+      <span>
+        {!!value
+          ? `${diffValue > 0 ? '+' : ''}${(diffValue * 100).toFixed(0)}%`
+          : 0}
+      </span>
     </div>
   )
 }
