@@ -3,11 +3,11 @@ import { group } from 'd3'
 import * as echarts from 'echarts'
 import { DEVICES } from '.'
 import { useRouter } from 'next/router'
-// import { DEVICES } from './devices'
 
 export default function DevicesDonut({ devices, meta, loading, data, error }) {
   const router = useRouter()
   const { query } = router
+  const devicesArray = devices.split(',')
 
   const options = {
     tooltip: {},
@@ -20,6 +20,7 @@ export default function DevicesDonut({ devices, meta, loading, data, error }) {
     legend: {
       orient: 'vertical',
       bottom: '0%',
+      selected: legendSelection(),
     },
     series: [
       {
@@ -48,21 +49,35 @@ export default function DevicesDonut({ devices, meta, loading, data, error }) {
   const graphEl = useRef()
   const [windowWidth, setWindowWidth] = useState(undefined)
 
+  function legendSelection() {
+    let obj = {}
+
+    Object.keys(DEVICES).forEach(function (d) {
+      obj[d] = !devices || devicesArray.includes(d)
+    })
+
+    return obj
+  }
+
   function _createGraph() {
     const echartInstance = echarts.init(graphEl.current)
     setChart(echartInstance)
 
     echartInstance.on('legendselectchanged', function ({ name, selected }) {
-      router.push({
-        pathname: `/admin`,
-        query: {
-          ...query,
-          devices: Object.keys(selected)
-            .map((dev) => (selected[dev] ? dev : null))
-            .filter((d) => !!d)
-            .join(','),
+      router.push(
+        {
+          pathname: `/admin`,
+          query: {
+            ...query,
+            devices: Object.keys(selected)
+              .map((dev) => (selected[dev] ? dev : null))
+              .filter((d) => !!d)
+              .join(','),
+          },
         },
-      })
+        null,
+        { scroll: false }
+      )
     })
   }
 
@@ -76,10 +91,19 @@ export default function DevicesDonut({ devices, meta, loading, data, error }) {
     if (chart) {
       chart.setOption({
         series: {
-          data: data.map((d) => {
-            return {
-              value: parseFloat(d.percentage).toFixed(2),
-              name: d.device,
+          data: Object.keys(DEVICES).map((d) => {
+            const found = data && data.find((v) => v.device === d)
+
+            if (found) {
+              return {
+                value: parseFloat(found.percentage).toFixed(2),
+                name: d,
+              }
+            } else {
+              return {
+                value: 0,
+                name: d,
+              }
             }
           }),
         },
