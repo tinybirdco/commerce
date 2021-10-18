@@ -88,7 +88,8 @@ export default function Sort({
                   className={cn(
                     'block text-sm leading-5 text-accent-4 hover:bg-accent-1 lg:hover:bg-transparent hover:text-accent-8 focus:outline-none focus:bg-accent-1 focus:text-accent-8',
                     {
-                      underline: sort === key,
+                      underline:
+                        (key === 'price_desc' && !sort) || sort === key,
                     }
                   )}
                 >

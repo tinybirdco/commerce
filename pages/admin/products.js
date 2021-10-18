@@ -18,6 +18,8 @@ export default function Products({ currentParams }) {
 
   if (sort) {
     rest[sort] = 1
+  } else {
+    rest['price_desc'] = 1
   }
 
   return (

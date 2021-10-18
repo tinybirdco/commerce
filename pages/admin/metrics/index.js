@@ -5,7 +5,7 @@ const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API
 const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN
 
 export default function Metrics({ currentParams }) {
-  const { range, ...rest } = currentParams
+  const { range, sort, ...rest } = currentParams
 
   if (range) {
     rest[range] = 1
