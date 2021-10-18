@@ -1,15 +1,40 @@
 import Data from '@components/common/Data'
+import useEffectOnUpdate from '@lib/hooks/useEffectOnUpdate'
+import { useState } from 'react'
 import MetricsItem from './item'
 
 const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API
 const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN
 
-export default function Metrics({ currentParams }) {
-  const { range, sort, ...rest } = currentParams
+export default function Metrics({ range, devices, category, size, color }) {
+  const [parameters] = useState([
+    { name: 'category', type: 'string' },
+    { name: 'color', type: 'string' },
+    { name: 'devices', type: 'string' },
+    { name: 'size', type: 'string' },
+    { name: 'month', type: 'string' },
+    { name: 'week', type: 'string' },
+  ])
+  const [queryParameters, setQueryParameters] = useState(genParams())
 
-  if (range) {
-    rest[range] = 1
+  function genParams() {
+    let obj = {
+      devices,
+      category,
+      size,
+      color,
+    }
+
+    if (range) {
+      obj[range] = 1
+    }
+
+    return obj
   }
+
+  useEffectOnUpdate(() => {
+    setQueryParameters(genParams())
+  }, [devices, category, size, range, color])
 
   return (
     <div className="col-span-8 order-3 lg:order-none">
@@ -22,15 +47,8 @@ export default function Metrics({ currentParams }) {
           host={API_URL}
           token={API_TOKEN}
           pipe={'get_totals'}
-          parameters={[
-            { name: 'category', type: 'string' },
-            // { name: 'color', type: 'string' },
-            { name: 'devices', type: 'string' },
-            { name: 'size', type: 'string' },
-            { name: 'month', type: 'string' },
-            { name: 'week', type: 'string' },
-          ]}
-          queryParameters={rest}
+          parameters={parameters}
+          queryParameters={queryParameters}
         >
           {(state) => (
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

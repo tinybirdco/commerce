@@ -1,3 +1,5 @@
+import useEffectOnUpdate from '@lib/hooks/useEffectOnUpdate'
+import { useState } from 'react'
 import { ProductCard } from '@components/product'
 import { Skeleton } from '@components/ui'
 import rangeMap from '@lib/range-map'
@@ -8,19 +10,54 @@ import data from '../../framework/local/data.json'
 const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API
 const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN
 
-export default function Products({ currentParams }) {
+export default function Products({
+  range,
+  sort,
+  devices,
+  category,
+  size,
+  color,
+}) {
   const products = data.products
-  const { range, sort, ...rest } = currentParams
 
-  if (range) {
-    rest[range] = 1
+  const [parameters] = useState([
+    { name: 'category', type: 'string' },
+    { name: 'color', type: 'string' },
+    { name: 'devices', type: 'string' },
+    { name: 'size', type: 'string' },
+    { name: 'month', type: 'string' },
+    { name: 'week', type: 'string' },
+    { name: 'price_asc', type: 'string' },
+    { name: 'price_desc', type: 'string' },
+    { name: 'sales_asc', type: 'string' },
+    { name: 'sales_desc', type: 'string' },
+  ])
+  const [queryParameters, setQueryParameters] = useState(genParams())
+
+  function genParams() {
+    let obj = {
+      devices,
+      category,
+      size,
+      color,
+    }
+
+    if (range) {
+      obj[range] = 1
+    }
+
+    if (sort) {
+      obj[sort] = 1
+    } else {
+      obj['price_desc'] = 1
+    }
+
+    return obj
   }
 
-  if (sort) {
-    rest[sort] = 1
-  } else {
-    rest['price_desc'] = 1
-  }
+  useEffectOnUpdate(() => {
+    setQueryParameters(genParams())
+  }, [devices, category, size, range, sort, color])
 
   return (
     <div className="mt-20">
@@ -28,19 +65,8 @@ export default function Products({ currentParams }) {
         host={API_URL}
         token={API_TOKEN}
         pipe={'get_product_sales'}
-        parameters={[
-          { name: 'category', type: 'string' },
-          { name: 'color', type: 'string' },
-          { name: 'devices', type: 'string' },
-          { name: 'size', type: 'string' },
-          { name: 'month', type: 'string' },
-          { name: 'week', type: 'string' },
-          { name: 'price_asc', type: 'string' },
-          { name: 'price_desc', type: 'string' },
-          { name: 'sales_asc', type: 'string' },
-          { name: 'sales_desc', type: 'string' },
-        ]}
-        queryParameters={rest}
+        parameters={parameters}
+        queryParameters={queryParameters}
       >
         {(state) => {
           return (

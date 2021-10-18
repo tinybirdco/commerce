@@ -20,7 +20,7 @@ export default function Admin({ categories, brands }: SearchPropsType) {
   const [activeFilter, setActiveFilter] = useState('')
   const [toggleFilter, setToggleFilter] = useState(false)
 
-  const [filters, setFilters] = useState({})
+  const [filters, setFilters] = useState(null)
 
   const router = useRouter()
   const { sort, category, size, color, devices, range } = router.query
@@ -51,9 +51,11 @@ export default function Admin({ categories, brands }: SearchPropsType) {
     fetchFilters()
   }, [])
 
-  if (!router.isReady) {
+  if (!router.isReady || !filters) {
     return null
   }
+
+  console.log('render admin page')
 
   return (
     <Container>
@@ -95,9 +97,9 @@ export default function Admin({ categories, brands }: SearchPropsType) {
         </div>
         
         <div className="col-span-8 order-3 lg:order-none">
-          <Metrics currentParams={router.query}/>
-          <Sales currentParams={router.query}/>
-          <Products currentParams={router.query} />
+          <Metrics {...router.query} />
+          <Sales {...router.query} />
+          <Products {...router.query} />
         </div>
 
         <div className="col-span-8 lg:col-span-2 order-2 lg:order-none">
