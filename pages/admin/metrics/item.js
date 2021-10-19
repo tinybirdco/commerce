@@ -13,7 +13,7 @@ export default function MetricsItem({
     separator: ',',
     prefix,
     suffix,
-    className: 'block text-2xl font-bold',
+    className: 'block text-2xl font-bold mt-1',
     preserveValue: true,
     end: value,
   }
@@ -26,9 +26,16 @@ export default function MetricsItem({
 
   return (
     <div className="block">
-      <h4 className="text-xs font-medium">{title}</h4>
+      <h4 className="text-xs text-accent-6 font-medium">{title}</h4>
       <CountUp {...opts} />
-      <span>
+      <span
+        className={`inline-block text-sm font-mono px-2 py-1 mt-2 rounded-sm ${
+          diffValue >= 0 ? 'text-accent-4' : 'text-red'
+        }`}
+        style={{
+          backgroundColor: diffValue >= 0 ? '#F6F7F9' : 'rgba(255, 0, 0, 0.1)',
+        }}
+      >
         {!!value
           ? `${diffValue > 0 ? '+' : ''}${(diffValue * 100).toFixed(0)}%`
           : 0}
