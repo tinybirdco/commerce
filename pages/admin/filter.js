@@ -97,6 +97,10 @@ export default function Filter({
 
                   queryParams[filterName] = item
 
+                  if (!item) {
+                    return null
+                  }
+
                   return (
                     <li
                       key={item}
