@@ -63,11 +63,14 @@ export default function DevicesDonut({ devices, meta, loading, data, error }) {
   }
 
   function _changeRoute(devices) {
+    const urlSearchParams = new URLSearchParams(window.location.search)
+    const params = Object.fromEntries(urlSearchParams.entries())
+
     router.push(
       {
         pathname: `/admin`,
         query: {
-          ...router.query,
+          ...params,
           devices,
         },
       },
@@ -165,8 +168,6 @@ export default function DevicesDonut({ devices, meta, loading, data, error }) {
     handleResize()
     return () => window.removeEventListener('resize', handleResize)
   }, [])
-
-  console.log(router.query)
 
   return (
     <div
