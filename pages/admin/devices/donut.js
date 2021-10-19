@@ -5,31 +5,35 @@ import { useRouter } from 'next/router'
 
 export default function DevicesDonut({ devices, meta, loading, data, error }) {
   const router = useRouter()
-  const { query } = router
   const devicesArray = devices ? devices.split(',') : []
 
   const options = {
     tooltip: {},
     grid: {
-      top: '0%',
+      top: 0,
       bottom: 0,
       left: 0,
       right: 0,
     },
     legend: {
+      icon: 'pin',
       orient: 'vertical',
-      bottom: '0%',
-      selected: legendSelection(),
+      left: '0',
+      bottom: '0',
+      selected: _legendSelection(),
     },
     series: [
       {
         name: 'Devices',
         type: 'pie',
-        radius: ['40%', '70%'],
+        radius: ['30%', '70%'],
+        width: '100px',
+        height: '100px',
+        top: '0',
+        left: '0',
         avoidLabelOverlap: false,
         label: {
           show: false,
-          position: 'center',
         },
         labelLine: {
           show: false,
@@ -48,7 +52,7 @@ export default function DevicesDonut({ devices, meta, loading, data, error }) {
   const graphEl = useRef()
   const [windowWidth, setWindowWidth] = useState(undefined)
 
-  function legendSelection() {
+  function _legendSelection() {
     let obj = {}
 
     Object.keys(DEVICES).forEach(function (d) {
@@ -58,24 +62,30 @@ export default function DevicesDonut({ devices, meta, loading, data, error }) {
     return obj
   }
 
+  function _changeRoute(devices) {
+    router.push(
+      {
+        pathname: `/admin`,
+        query: {
+          ...router.query,
+          devices,
+        },
+      },
+      null,
+      { scroll: false }
+    )
+  }
+
   function _createGraph() {
     const echartInstance = echarts.init(graphEl.current)
     setChart(echartInstance)
 
-    echartInstance.on('legendselectchanged', function ({ name, selected }) {
-      router.push(
-        {
-          pathname: `/admin`,
-          query: {
-            ...query,
-            devices: Object.keys(selected)
-              .map((dev) => (selected[dev] ? dev : null))
-              .filter((d) => !!d)
-              .join(','),
-          },
-        },
-        null,
-        { scroll: false }
+    echartInstance.on('legendselectchanged', function ({ selected }) {
+      _changeRoute(
+        Object.keys(selected)
+          .map((dev) => (selected[dev] ? dev : null))
+          .filter((d) => !!d)
+          .join(',')
       )
     })
   }
@@ -156,10 +166,12 @@ export default function DevicesDonut({ devices, meta, loading, data, error }) {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
+  console.log(router.query)
+
   return (
     <div
       className={'Chart'}
-      style={{ height: '177px', width: '80px' }}
+      style={{ height: '180px', width: '100%' }}
       ref={graphEl}
     ></div>
   )
