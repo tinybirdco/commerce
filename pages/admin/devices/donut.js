@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from 'react'
-import { group } from 'd3'
 import * as echarts from 'echarts'
 import { DEVICES } from '.'
 import { useRouter } from 'next/router'
