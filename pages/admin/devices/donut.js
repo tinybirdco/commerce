@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 export default function DevicesDonut({ devices, meta, loading, data, error }) {
   const router = useRouter()
   const { query } = router
-  const devicesArray = devices.split(',')
+  const devicesArray = devices ? devices.split(',') : []
 
   const options = {
     tooltip: {},
