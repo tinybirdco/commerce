@@ -2,6 +2,7 @@ import useEffectOnUpdate from '@lib/hooks/useEffectOnUpdate'
 import { useState } from 'react'
 import SalesChart from './chart'
 import Data from '@components/common/Data'
+import { LoadingDots } from '@components/ui'
 
 const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API
 const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN
@@ -38,12 +39,6 @@ export default function Sales({ range, devices, category, size, color }) {
 
   return (
     <>
-      <div className="block text-sm leading-5 text-accent-4 lg:text-base lg:no-underline lg:font-bold lg:tracking-wide mt-20">
-        <h3 className={'block lg:inline-block py-4 '}>
-          {`Last ${range} sales`}
-        </h3>
-      </div>
-
       <Data
         host={API_URL}
         token={API_TOKEN}
@@ -51,7 +46,21 @@ export default function Sales({ range, devices, category, size, color }) {
         parameters={parameters}
         queryParameters={queryParameters}
       >
-        {(state) => <SalesChart devices={devices} range={range} {...state} />}
+        {(state) => (
+          <>
+            <div className="flex items-center text-sm leading-5 text-accent-4 lg:text-base lg:no-underline lg:font-bold lg:tracking-wide mt-20">
+              <h3
+                className={'block lg:inline-block py-4 '}
+              >{`Last ${range} sales`}</h3>
+              {state.loading && (
+                <div className="pl-3">
+                  <LoadingDots />
+                </div>
+              )}
+            </div>
+            <SalesChart devices={devices} range={range} {...state} />
+          </>
+        )}
       </Data>
     </>
   )

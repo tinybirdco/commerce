@@ -1,4 +1,5 @@
 import Data from '@components/common/Data'
+import { LoadingDots } from '@components/ui'
 import useEffectOnUpdate from '@lib/hooks/useEffectOnUpdate'
 import { useState } from 'react'
 import MetricsItem from './item'
@@ -38,19 +39,24 @@ export default function Metrics({ range, devices, category, size, color }) {
 
   return (
     <div className="col-span-8 order-3 lg:order-none">
-      <div className="block text-sm leading-5 text-accent-4 lg:text-base lg:no-underline lg:font-bold lg:tracking-wide">
-        <h3 className={'block lg:inline-block my-4'}>Main Metrics</h3>
-      </div>
+      <Data
+        host={API_URL}
+        token={API_TOKEN}
+        pipe={'get_totals'}
+        parameters={parameters}
+        queryParameters={queryParameters}
+      >
+        {(state) => (
+          <>
+            <div className="flex items-center text-sm leading-5 text-accent-4 lg:text-base lg:no-underline lg:font-bold lg:tracking-wide">
+              <h3 className={'block lg:inline-block my-4'}>Main Metrics</h3>
+              {state.loading && (
+                <div className="pl-3">
+                  <LoadingDots />
+                </div>
+              )}
+            </div>
 
-      <div className="block">
-        <Data
-          host={API_URL}
-          token={API_TOKEN}
-          pipe={'get_totals'}
-          parameters={parameters}
-          queryParameters={queryParameters}
-        >
-          {(state) => (
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               <MetricsItem
                 title="TOTAL SALES"
@@ -102,9 +108,9 @@ export default function Metrics({ range, devices, category, size, color }) {
                 }}
               />
             </div>
-          )}
-        </Data>
-      </div>
+          </>
+        )}
+      </Data>
     </div>
   )
 }
