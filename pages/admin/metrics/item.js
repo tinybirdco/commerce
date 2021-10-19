@@ -22,7 +22,7 @@ export default function MetricsItem({
     opts['formattingFn'] = formatter
   }
 
-  const diffValue = value / prevValue - 1
+  const diffValue = value / prevValue - 1 || 0
 
   return (
     <div className="block">
