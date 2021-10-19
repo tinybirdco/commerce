@@ -51,7 +51,7 @@ export default function Admin({ categories, brands }: SearchPropsType) {
     fetchFilters()
   }, [])
 
-  if (!router.isReady || !filters) {
+  if (!router.isReady) {
     return null
   }
 
@@ -66,7 +66,7 @@ export default function Admin({ categories, brands }: SearchPropsType) {
             currentFilter={category}
             currentParams={router.query}
             handleClick={handleClick} 
-            items={filters.categories}
+            items={filters?.categories}
             renderItem={null}
             toggleFilter={toggleFilter}
           />
@@ -77,7 +77,7 @@ export default function Admin({ categories, brands }: SearchPropsType) {
             currentFilter={size}
             currentParams={router.query}
             handleClick={handleClick} 
-            items={filters.sizes}
+            items={filters?.sizes}
             renderItem={null}
             toggleFilter={toggleFilter}
           />
@@ -88,7 +88,7 @@ export default function Admin({ categories, brands }: SearchPropsType) {
             currentFilter={color}
             currentParams={router.query}
             handleClick={handleClick} 
-            items={filters.colors}
+            items={filters?.colors}
             renderItem={null}
             toggleFilter={toggleFilter}
           />
