@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import CountUp from 'react-countup'
 
 export default function MetricsItem({
@@ -15,19 +16,19 @@ export default function MetricsItem({
     suffix,
     className: 'block text-2xl font-bold mt-1',
     preserveValue: true,
-    end: value,
   }
 
   if (formatter) {
     opts['formattingFn'] = formatter
   }
 
+  const [options] = useState(opts)
   const diffValue = value / prevValue - 1 || 0
 
   return (
     <div className="block">
       <h4 className="text-xs text-accent-6 font-medium">{title}</h4>
-      <CountUp {...opts} />
+      <CountUp {...options} end={value} />
       <span
         className={`inline-block text-sm font-mono px-2 py-1 mt-2 rounded-sm ${
           diffValue >= 0 ? 'text-accent-4' : 'text-red'
