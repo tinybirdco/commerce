@@ -38,7 +38,6 @@
     "next": "^11.0.0",
     "next-seo": "^4.26.0",
     "next-themes": "^0.0.14",
-    "next-tinybird": "tinybirdco/next-tinybird#main",
     "postcss": "^8.3.5",
     "postcss-nesting": "^8.0.1",
     "react": "^17.0.2",
