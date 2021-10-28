@@ -5,13 +5,13 @@ import { useRouter } from 'next/router'
 import { Layout } from '@components/common'
 import { Container } from '@components/ui'
 
-import Products from './products'
-import Filter from './filter'
-import Sort from './sort'
-import Dates from './dates'
-import Devices from './devices'
-import Metrics from './metrics'
-import Sales from './sales'
+import Products from '../../components/admin/products'
+import Filter from '../../components/admin/filter'
+import Sort from '../../components/admin/sort'
+import Dates from '../../components/admin/dates'
+import Devices from '../../components/admin/devices'
+import Metrics from '../../components/admin/metrics'
+import Sales from '../../components/admin/sales'
 
 const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API
 const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN
@@ -36,7 +36,7 @@ export default function Admin({ categories, brands }: SearchPropsType) {
 
   useEffect(function () {
     async function fetchFilters() {
-      const { d, e } = await fetch('https://api.tinybird.co/v0/pipes/get_filters.json?token=p.eyJ1IjogIjA5MTU3Y2VhLTA1MTUtNGM4MS1hZjAzLTMwNTU5NjBiNzFiOCIsICJpZCI6ICI4OWJiYmNiOS1iMTgxLTQyZjUtOWFkYS1kNjA2YWRkODdlMGEifQ.nDoRE1TJOSIsF5yktcBgQv0wMTw85yH0lopv8RgWBPE')
+      const { d, e } = await fetch(`${API_URL}/v0/pipes/get_filters.json?token=${API_TOKEN}`)
       .then(r => r.json())
       .then(d => ({ d }))
       .catch(e => ({ e: e.toString() }))
