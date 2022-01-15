@@ -11,6 +11,8 @@ import cn from 'classnames'
 import { a } from '@react-spring/web'
 import s from './ProductSlider.module.css'
 import ProductSliderControl from '../ProductSliderControl'
+import TinybirdProvider, { useTinybird } from 'next-tinybird'
+
 
 interface ProductSliderProps {
   children: React.ReactNode[]
@@ -25,6 +27,8 @@ const ProductSlider: React.FC<ProductSliderProps> = ({
   const [isMounted, setIsMounted] = useState(false)
   const sliderContainerRef = useRef<HTMLDivElement>(null)
   const thumbsContainerRef = useRef<HTMLDivElement>(null)
+
+  const tinybird = useTinybird()
 
   const [ref, slider] = useKeenSlider<HTMLDivElement>({
     loop: true,
@@ -96,7 +100,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({
                 ...child.props,
                 className: `${
                   child.props.className ? `${child.props.className} ` : ''
-                }keen-slider__slide`,
+                }keen-slider__slide`
               },
             }
           }
@@ -117,6 +121,10 @@ const ProductSlider: React.FC<ProductSliderProps> = ({
                   }),
                   id: `thumb-${idx}`,
                   onClick: () => {
+                    tinybird('click-product-image', {
+                      url: child.props['data-image'],
+                      product: child.props['data-product']
+                    })
                     slider.moveToSlideRelative(idx)
                   },
                 },

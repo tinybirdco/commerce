@@ -2,12 +2,13 @@ import useEffectOnUpdate from '@lib/hooks/useEffectOnUpdate'
 import { ReactNode, useEffect, useState } from 'react'
 
 const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API
+const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN
 const PIPES_PATHNAME = '/v0/pipes'
 const DEFAULT_FORMAT = 'json'
 
 export default function Data(props: {
   host?: string
-  token: string
+  token?: string
   pipe: string
   format?: string
   sql?: string
@@ -28,7 +29,8 @@ export default function Data(props: {
       `${props.host || API_URL}${PIPES_PATHNAME}/${props.pipe}.${props.format || DEFAULT_FORMAT}`
     )
 
-    let queryParams = new URLSearchParams(`token=${props.token}`)
+    const token = props.token || API_TOKEN
+    let queryParams = new URLSearchParams(`token=${token}`)
 
     if (props.parameters) {
       props.parameters.forEach(({ name, type, defaultValue = '' }) => {
@@ -62,5 +64,5 @@ export default function Data(props: {
     _fetchData()
   }, [])
 
-  return <>{props.children({ data, meta, loading, error })}</>
+  return <>{props && props.children && props.children({ data, meta, loading, error })}</>
 }

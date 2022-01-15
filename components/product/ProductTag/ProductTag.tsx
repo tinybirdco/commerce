@@ -28,7 +28,7 @@ const ProductTag: React.FC<ProductTagProps> = ({
           {name}
         </span>
       </h3>
-      <div className={s.price}>{price}</div>
+      {price && (<div className={s.price}>{price}</div>)}
     </div>
   )
 }

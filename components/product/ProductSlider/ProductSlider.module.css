@@ -16,12 +16,13 @@
   @apply transition-transform transition-colors
   ease-linear duration-75 overflow-hidden inline-block
   cursor-pointer h-full;
-  width: 125px;
-  width: calc(100% / 3);
+  /* width: 125px; */
+  width: auto;
 }
 
 .thumb.selected {
   @apply bg-white;
+  border-bottom: 10px solid var(--violet);
 }
 
 .thumb img {
@@ -31,7 +32,7 @@
 .album {
   width: 100%;
   height: 100%;
-  @apply bg-black;
+  @apply bg-violet;
   box-sizing: content-box;
   overflow-y: hidden;
   overflow-x: auto;
@@ -59,6 +60,6 @@
     height: 182px;
   }
   .thumb {
-    width: 235px;
+    width: 'auto';
   }
 }

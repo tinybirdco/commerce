@@ -2,14 +2,16 @@ import cn from 'classnames'
 import Image from 'next/image'
 import { NextSeo } from 'next-seo'
 import s from './ProductView.module.css'
-import { FC } from 'react'
+import { useCallback, FC } from 'react'
 import type { Product } from '@commerce/types/product'
 import usePrice from '@framework/product/use-price'
 import { WishlistButton } from '@components/wishlist'
 import { ProductSlider, ProductCard } from '@components/product'
 import { Container, Text } from '@components/ui'
+import Data from '@components/common/Data'
 import ProductSidebar from '../ProductSidebar'
 import ProductTag from '../ProductTag'
+
 interface ProductViewProps {
   product: Product
   relatedProducts: Product[]
@@ -22,6 +24,21 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
     currencyCode: product.price.currencyCode!,
   })
 
+  const getSortedImages = (data) => {
+    const defaultRanking = product.images.length - data.length
+    
+    return product.images
+      .map((image) => {
+          const index = data.findIndex((rankingImage) => rankingImage.url === image.url)
+
+          return {
+            ...image,
+            ranking: index >= 0 ? index + 1 : defaultRanking
+          }
+      })
+      .sort((a, b) => a.ranking - b.ranking)
+  }
+
   return (
     <>
       <Container className="max-w-none w-full" clean>
@@ -32,34 +49,63 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
               price={`${price} ${product.price?.currencyCode}`}
               fontSize={32}
             />
-            <div className={s.sliderContainer}>
-              <ProductSlider key={product.id}>
-                {product.images.map((image, i) => (
-                  <div key={image.url} className={s.imageContainer}>
-                    <Image
-                      className={s.img}
-                      src={image.url!}
-                      alt={image.alt || 'Product Image'}
-                      width={600}
-                      height={600}
-                      priority={i === 0}
-                      quality="85"
-                    />
-                  </div>
-                ))}
-              </ProductSlider>
-            </div>
-            {process.env.COMMERCE_WISHLIST_ENABLED && (
-              <WishlistButton
-                className={s.wishlistButton}
-                productId={product.id}
-                variant={product.variants[0]}
-              />
-            )}
-          </div>
 
+            <div className={s.sliderContainer}>
+              <Data
+                parameters={[{
+                  name: 'product_id',
+                  type: 'string',
+                  defaultValue: ''
+                }]}
+                queryParameters={{ product_id: product.id }}
+                pipe="get_most_clicked_image" >
+                {(props: { data: Array<any>, error: string, meta: Array<any>, loading: Boolean }) => {
+                  const sortedImages = props && props.data
+                    ? getSortedImages(props.data)
+                    : product.images
+ 
+                  return <ProductSlider key={product.id}>
+                    {sortedImages.map((image, i) => (
+                      <div key={image.url} 
+                        className={s.imageContainer}
+                        data-image={image.url}
+                        data-product={product.id}>
+
+                        <Image
+                          className={s.img}
+                          src={image.url}
+                          alt={image.alt || 'Product Image'}
+                          width={600}
+                          height={600}
+                          priority={i === 0}
+                          quality="85"
+                        />
+                      </div>
+                    ))}
+                  </ProductSlider>
+                }}
+              </Data>
+                {/* Default */}
+                {/* <ProductSlider key={product.id}>
+                  {product.images.map((image, i) => (
+                    <div key={image.url} className={s.imageContainer} data-image={image.url} data-product={product.id}>
+                      <Image
+                        className={s.img}
+                        src={image.url!}
+                        alt={image.alt || 'Product Image'}
+                        width={600}
+                        height={600}
+                        priority={i === 0}
+                        quality="85"
+                      />
+                    </div>
+                  ))}
+                </ProductSlider> */}
+            </div>
+          </div>
           <ProductSidebar key={product.id} product={product} className={s.sidebar} />
         </div>
+     
         <hr className="mt-7 border-accent-2" />
         <section className="py-12 px-6 mb-10">
           <Text variant="sectionHeading">Related Products</Text>

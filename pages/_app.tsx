@@ -19,12 +19,15 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   const Layout = (Component as any).Layout || Noop
   const router = useRouter()
   const tinybird = useTinybird()
-  
+
   useEffect(() => {
-    tinybird('pageload', { url: router.pathname })
+    tinybird('page-load', { url: router.asPath })
 
     const handleRouteChange = (url: string) => {
-      tinybird('pageload', { url })
+      tinybird('page-load', {
+        url,
+        product: 'none'
+      })
     }
 
     router.events.on('routeChangeStart', handleRouteChange)
@@ -40,7 +43,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <TinybirdProvider 
       api={API_URL}
       trackerURL={TRACKER_URL}
-      dataSource={'events'}
+      dataSource={'events_demo'}
       token={API_TOKEN}
     >
       <Head />
