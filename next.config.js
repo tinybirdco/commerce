@@ -17,6 +17,9 @@ module.exports = withCommerceConfig({
     locales: ['en-US', 'es'],
     defaultLocale: 'en-US',
   },
+  images: {
+    domains: ['static.zara.net'],
+  },
   rewrites() {
     return [
       (isBC || isShopify || isSwell || isVendure || isSaleor) && {
