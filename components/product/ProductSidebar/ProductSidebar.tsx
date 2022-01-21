@@ -9,6 +9,11 @@ import {
   selectDefaultOptionFromProduct,
   SelectedOptions,
 } from '../helpers'
+import Data from '@components/common/Data'
+import products from 'pages/api/catalog/products'
+
+const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API
+const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN
 
 interface ProductSidebarProps {
   product: Product
@@ -77,9 +82,18 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
           drop ends.
         </Collapse>
         <Collapse title="Details">
-          This is a limited edition production run. Printing starts when the
-          drop ends. Reminder: Bad Boys For Life. Shipping may take 10+ days due
-          to COVID-19.
+          <Data
+            host={API_URL}
+            token={API_TOKEN}
+            pipe={'demo_views_per_partnumber'}
+            // parameters={parameters}
+            >
+            {(state) => (
+              <div>
+                {state && state.data ? state.data[0].views : 0} views in the last 24h
+              </div>
+            )}
+          </Data>
         </Collapse>
       </div>
     </div>
