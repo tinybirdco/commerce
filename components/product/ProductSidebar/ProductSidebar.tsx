@@ -95,10 +95,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
                 {state && state.data
                   ? state.data.map((d) => (
                       <div key={d.product_size}>
-                        {'Size: ' +
-                          d.product_size +
-                          '  Available units: ' +
-                          d.available_stock}
+                        {`Size: ${d.product_size}  Available units: ${d.available_stock}`}
                       </div>
                     ))
                   : 0}
