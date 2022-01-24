@@ -10,7 +10,6 @@ import {
   SelectedOptions,
 } from '../helpers'
 import Data from '@components/common/Data'
-import products from 'pages/api/catalog/products'
 
 const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API
 const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN
@@ -18,7 +17,9 @@ const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN
 const API_STOCK_URL = process.env.NEXT_PUBLIC_TINYBIRD_PRODUCTION_API
 const API_STOCK_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_PRODUCTION_TOKEN
 
-const parameters = [{ name: 'partnumber', type: 'string' , defaultValue: '11198810100-I2021'}]
+const parameters = [
+  { name: 'partnumber', type: 'string', defaultValue: '11198810100-I2021' },
+]
 
 interface ProductSidebarProps {
   product: Product
@@ -83,15 +84,21 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
       </div>
       <div className="mt-6">
         <Collapse title="Stock">
-        <Data
+          <Data
             host={API_STOCK_URL}
             token={API_STOCK_TOKEN}
             pipe={'demo_stock_per_product'}
             parameters={parameters}
-            >
+          >
             {(state) => (
               <div>
-                {state && state.data ? state.data.map(d => (<div>{"Size: "+d.product_size+"  Available units: "+d.available_stock}</div>)): 0}                
+                {state && state.data
+                  ? state.data.map((d) => (
+                      <div key={d.product_size}>
+                        {`Size: ${d.product_size}  Available units: ${d.available_stock}`}
+                      </div>
+                    ))
+                  : 0}
               </div>
             )}
           </Data>
@@ -101,11 +108,14 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
             host={API_URL}
             token={API_TOKEN}
             pipe={'demo_views_per_partnumber'}
-            parameters={[{ name: 'partnumber', type: 'string' , defaultValue: product.id}]}
-            >
+            parameters={[
+              { name: 'partnumber', type: 'string', defaultValue: product.id },
+            ]}
+          >
             {(state) => (
               <div>
-                {state && state.data ? state.data[0].views : 0} views in the last 24h
+                {state && state.data ? state.data[0].views : 0} views in the
+                last 24h
               </div>
             )}
           </Data>
