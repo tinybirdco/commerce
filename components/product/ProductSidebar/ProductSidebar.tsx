@@ -15,6 +15,11 @@ import products from 'pages/api/catalog/products'
 const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API
 const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN
 
+const API_STOCK_URL = process.env.NEXT_PUBLIC_TINYBIRD_PRODUCTION_API
+const API_STOCK_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_PRODUCTION_TOKEN
+
+const parameters = [{ name: 'partnumber', type: 'string' , defaultValue: '11198810100-I2021'}]
+
 interface ProductSidebarProps {
   product: Product
   className?: string
@@ -77,16 +82,26 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
         )}
       </div>
       <div className="mt-6">
-        <Collapse title="Care">
-          This is a limited edition production run. Printing starts when the
-          drop ends.
+        <Collapse title="Stock">
+        <Data
+            host={API_STOCK_URL}
+            token={API_STOCK_TOKEN}
+            pipe={'demo_stock_per_product'}
+            parameters={parameters}
+            >
+            {(state) => (
+              <div>
+                {state && state.data ? state.data[0].available_stock : 0} available units
+              </div>
+            )}
+          </Data>
         </Collapse>
-        <Collapse title="Details">
+        <Collapse title="Views">
           <Data
             host={API_URL}
             token={API_TOKEN}
             pipe={'demo_views_per_partnumber'}
-            // parameters={parameters}
+            parameters={[{ name: 'partnumber', type: 'string' , defaultValue: product.id}]}
             >
             {(state) => (
               <div>
