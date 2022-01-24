@@ -18,7 +18,9 @@ export default function getAllProductsOperation({
     preview?: boolean
   } = {}): Promise<{ products: Product[] | any[] }> {
     return {
-      products: data.products,
+      products: variables?.first
+        ? data.products.slice(0, variables?.first)
+        : data.products,
     }
   }
   return getAllProducts
