@@ -154,3 +154,4 @@ After Email confirmation, Checkout should be manually enabled through BigCommerc
 <br>
 BigCommerce team has been notified and they plan to add more details about this subject.
 </details>
+
