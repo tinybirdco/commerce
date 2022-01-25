@@ -23,19 +23,41 @@ export default function getSiteInfoOperation({}: OperationContext<any>) {
     return Promise.resolve({
       categories: [
         {
-          id: 'new-arrivals',
-          name: 'New Arrivals',
-          slug: 'new-arrivals',
-          path: '/new-arrivals',
+          id: 'women',
+          name: 'Women',
+          slug: 'women',
+          path: '/women',
         },
         {
-          id: 'featured',
-          name: 'Featured',
-          slug: 'featured',
-          path: '/featured',
+          id: 'men',
+          name: 'Men',
+          slug: 'men',
+          path: '/men',
         },
       ],
-      brands: [],
+      brands: [
+        {
+          node: {
+            entityId: 'shirts',
+            name: 'Shirts',
+            path: `brands/shirts`,
+          },
+        },
+        {
+          node: {
+            entityId: 'trousers',
+            name: 'Trousers',
+            path: `brands/trousers`,
+          },
+        },
+        {
+          node: {
+            entityId: 'shoes',
+            name: 'Shoes',
+            path: `brands/shoes`,
+          },
+        },
+      ],
     })
   }
 
