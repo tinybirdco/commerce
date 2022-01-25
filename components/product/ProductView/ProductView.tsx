@@ -19,7 +19,7 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
   const { price } = usePrice({
     amount: product.price.value,
     baseAmount: product.price.retailPrice,
-    currencyCode: product.price.currencyCode!,
+    currencyCode: 'USD',
   })
 
   return (
@@ -27,11 +27,7 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
       <Container className="max-w-none w-full" clean>
         <div className={cn(s.root, 'fit')}>
           <div className={cn(s.main, 'fit')}>
-            <ProductTag
-              name={product.name}
-              price={`${price} ${product.price?.currencyCode}`}
-              fontSize={32}
-            />
+            <ProductTag name={product.name} price={`${price}`} fontSize={32} />
             <div className={s.sliderContainer}>
               <ProductSlider key={product.id}>
                 {product.images.map((image, i) => (
@@ -58,7 +54,11 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
             )}
           </div>
 
-          <ProductSidebar key={product.id} product={product} className={s.sidebar} />
+          <ProductSidebar
+            key={product.id}
+            product={product}
+            className={s.sidebar}
+          />
         </div>
         <hr className="mt-7 border-accent-2" />
         <section className="py-12 px-6 mb-10">

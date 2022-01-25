@@ -1,8 +1,10 @@
 import type { LocalConfig } from '../index'
 import { Product } from '@commerce/types/product'
 import { GetProductOperation } from '@commerce/types/product'
-import data from '../../data.json'
 import type { OperationContext } from '@commerce/api/operations'
+
+const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API
+const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN
 
 export default function getProductOperation({
   commerce,
@@ -17,8 +19,27 @@ export default function getProductOperation({
     config?: Partial<LocalConfig>
     preview?: boolean
   } = {}): Promise<Product | {} | any> {
-    return {
-      product: data.products.find(({ slug }) => slug === variables!.slug),
+    const url = `${API_URL}/v0/pipes/demo_product_details.json?token=${API_TOKEN}&partnumber=${
+      variables!.slug
+    }`
+
+    const { res, error } = await fetch(url)
+      .then((res) => res.json())
+      .then((res) => ({ res }))
+      .catch((error) => ({ error: error.toString() }))
+
+    if (res?.data) {
+      const { data } = res
+      const product = data[0]
+      product.price = { value: product.basic_price }
+      product.id = product.partnumber
+
+      return {
+        product: product,
+      }
+    } else {
+      console.log(error)
+      return Promise.reject(error)
     }
   }
 

@@ -26,9 +26,9 @@ const ProductCard: FC<Props> = ({
   variant = 'default',
 }) => {
   const { price } = usePrice({
-    amount: product.price.value,
+    amount: parseInt(product.price.value),
     baseAmount: product.price.retailPrice,
-    currencyCode: product.price.currencyCode!,
+    currencyCode: 'USD',
   })
 
   const rootClassName = cn(
@@ -73,9 +73,7 @@ const ProductCard: FC<Props> = ({
                 <h3 className={s.name}>
                   <span>{product.name}</span>
                 </h3>
-                <div className={s.price}>
-                  {`${price} ${product.price?.currencyCode}`}
-                </div>
+                <div className={s.price}>{`${price}`}</div>
               </div>
             )}
             <div className={s.imageContainer}>
@@ -104,10 +102,7 @@ const ProductCard: FC<Props> = ({
                 variant={product.variants[0] as any}
               />
             )}
-            <ProductTag
-              name={product.name}
-              price={`${price} ${product.price?.currencyCode}`}
-            />
+            <ProductTag name={product.name} price={`${price}`} />
             <div className={s.imageContainer}>
               {product?.images && (
                 <Image

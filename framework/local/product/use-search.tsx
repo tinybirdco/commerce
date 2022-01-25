@@ -1,33 +1,44 @@
 import { SWRHook } from '@commerce/utils/types'
 import useSearch, { UseSearch } from '@commerce/product/use-search'
-import data from '../data_obj.json'
 
 export default useSearch as UseSearch<typeof handler>
 
 const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API
 const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN
-const LIMIT = 20
+
 export const handler: SWRHook<any> = {
   fetchOptions: {
     query: '',
   },
-  async fetcher({ input, options }) {
-    const url = `${API_URL}/v0/pipes/demo_purchase_prods_slow.json?token=${API_TOKEN}${
-      input.brandId ? `&product=${input.brandId}` : ''
-    }${input.categoryId ? `&section=${input.categoryId}` : ''}${
-      input.sort ? `&ranking=${input.sort}` : ''
+  async fetcher({ input }) {
+    const { brandId, categoryId, sort, limit } = input
+    let url = `${API_URL}/v0/pipes/demo_purchase_prods_fast.json?token=${API_TOKEN}&limit_prods=${
+      limit ? `${limit}` : '100'
     }`
+
+    if (brandId) {
+      url += `&product=${brandId}`
+    }
+    if (categoryId) {
+      url += `&section=${categoryId}`
+    }
+    if (sort) {
+      url += `&ranking=${sort}`
+    }
+
     const { res, error } = await fetch(url)
       .then((res) => res.json())
       .then((res) => ({ res }))
       .catch((error) => ({ error: error.toString() }))
-    console.log(res)
+
     if (res?.data) {
-      const { data: productIds } = res
-      const products = productIds
-        .map((product) => data[product.partnumber])
-        .filter(Boolean)
-        .slice(0, 100)
+      const { data } = res
+      const products = data.map((product) => ({
+        ...product,
+        price: { value: product.basic_price },
+        slug: product.partnumber,
+        images: [{ url: product.image }],
+      }))
 
       return {
         products: products,
@@ -35,6 +46,7 @@ export const handler: SWRHook<any> = {
       }
     } else {
       console.log(error)
+      return { products: [] }
     }
   },
   useHook:
@@ -45,6 +57,7 @@ export const handler: SWRHook<any> = {
           ['categoryId', input.categoryId],
           ['brandId', input.brandId],
           ['sort', input.sort],
+          ['limit', input.limit],
         ],
         swrOptions: {
           revalidateOnFocus: false,

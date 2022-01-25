@@ -104,8 +104,6 @@ const Layout: FC<Props> = ({
         href: `/search/${c.slug}`,
       }))
 
-    defaultLinks.push({ label: 'Admin', href: '/admin' })
-
     return defaultLinks
   }
 
