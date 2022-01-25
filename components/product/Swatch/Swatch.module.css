@@ -52,3 +52,12 @@
   padding-right: calc(1rem - 1px);
   padding-left: calc(1rem - 1px);
 }
+
+.disabled,
+.disabled:hover {
+  @apply text-accent-4 border-accent-2 bg-accent-1 cursor-not-allowed;
+  filter: grayscale(1);
+  -webkit-transform: translateZ(0);
+  -webkit-perspective: 1000;
+  -webkit-backface-visibility: hidden;
+}

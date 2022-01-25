@@ -3,7 +3,7 @@ import { useAddItem } from '@framework/cart'
 import { FC, useEffect, useState } from 'react'
 import { ProductOptions } from '@components/product'
 import type { Product } from '@commerce/types/product'
-import { Button, Text, Rating, Collapse, useUI } from '@components/ui'
+import { Text, Collapse, useUI } from '@components/ui'
 import {
   getProductVariant,
   selectDefaultOptionFromProduct,
@@ -17,92 +17,61 @@ const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN
 const API_STOCK_URL = process.env.NEXT_PUBLIC_TINYBIRD_PRODUCTION_API
 const API_STOCK_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_PRODUCTION_TOKEN
 
-const parameters = [
-  { name: 'partnumber', type: 'string', defaultValue: '11198810100-I2021' },
-]
-
 interface ProductSidebarProps {
   product: Product
   className?: string
 }
 
 const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
-  const addItem = useAddItem()
-  const { openSidebar } = useUI()
-  const [loading, setLoading] = useState(false)
   const [selectedOptions, setSelectedOptions] = useState<SelectedOptions>({})
-
-  useEffect(() => {
-    selectDefaultOptionFromProduct(product, setSelectedOptions)
-  }, [product])
-
-  const variant = getProductVariant(product, selectedOptions)
-  const addToCart = async () => {
-    setLoading(true)
-    try {
-      await addItem({
-        productId: String(product.id),
-        variantId: String(variant ? variant.id : product.variants[0].id),
-      })
-      openSidebar()
-      setLoading(false)
-    } catch (err) {
-      setLoading(false)
-    }
-  }
 
   return (
     <div className={className}>
-      <ProductOptions
-        options={product.options}
-        selectedOptions={selectedOptions}
-        setSelectedOptions={setSelectedOptions}
-      />
       <Text
         className="pb-4 break-words w-full max-w-xl"
         html={product.descriptionHtml || product.description}
       />
-      <div className="flex flex-row justify-between items-center">
-        <Rating value={4} />
-        <div className="text-accent-6 pr-1 font-medium text-sm">36 reviews</div>
-      </div>
-      <div>
-        {process.env.COMMERCE_CART_ENABLED && (
-          <Button
-            aria-label="Add to Cart"
-            type="button"
-            className={s.button}
-            onClick={addToCart}
-            loading={loading}
-            disabled={variant?.availableForSale === false}
-          >
-            {variant?.availableForSale === false
-              ? 'Not Available'
-              : 'Add To Cart'}
-          </Button>
-        )}
-      </div>
       <div className="mt-6">
-        <Collapse title="Stock">
-          <Data
-            host={API_STOCK_URL}
-            token={API_STOCK_TOKEN}
-            pipe={'demo_stock_per_product'}
-            parameters={parameters}
-          >
-            {(state) => (
-              <div>
-                {state && state.data
-                  ? state.data.map((d) => (
+        <Data
+          host={API_STOCK_URL}
+          token={API_STOCK_TOKEN}
+          pipe={'demo_stock_per_product'}
+          parameters={[
+            { name: 'partnumber', type: 'string', defaultValue: product.id },
+          ]}
+        >
+          {(stockPerSize) => (
+            <div>
+              {stockPerSize && stockPerSize.data ? (
+                <ProductOptions
+                  options={[
+                    {
+                      displayName: 'Size',
+                      id: 'option-size',
+                      values: stockPerSize.data.map((d) => ({
+                        label: d.product_size.toString(),
+                        disabled: !d.available_stock,
+                      })),
+                    },
+                  ]}
+                  selectedOptions={selectedOptions}
+                  setSelectedOptions={setSelectedOptions}
+                />
+              ) : (
+                0
+              )}
+              <Collapse title="Stock">
+                {stockPerSize && stockPerSize.data
+                  ? stockPerSize.data.map((d) => (
                       <div key={d.product_size}>
                         {`Size: ${d.product_size}  Available units: ${d.available_stock}`}
                       </div>
                     ))
                   : 0}
-              </div>
-            )}
-          </Data>
-        </Collapse>
+              </Collapse>
+            </div>
+          )}
+        </Data>
         <Collapse title="Views">
           <Data
             host={API_URL}

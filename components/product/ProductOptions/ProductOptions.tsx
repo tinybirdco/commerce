@@ -28,6 +28,7 @@ const ProductOptions: React.FC<ProductOptionsProps> = ({
                 <Swatch
                   key={`${opt.id}-${i}`}
                   active={v.label.toLowerCase() === active}
+                  disabled={v.disabled}
                   variant={opt.displayName}
                   color={v.hexColors ? v.hexColors[0] : ''}
                   label={v.label}

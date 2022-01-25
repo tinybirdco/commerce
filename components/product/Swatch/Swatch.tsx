@@ -9,6 +9,7 @@ interface SwatchProps {
   children?: any
   className?: string
   variant?: 'size' | 'color' | string
+  disabled?: boolean
   color?: string
   label?: string | null
 }
@@ -20,6 +21,7 @@ const Swatch: React.FC<Omit<ButtonProps, 'variant'> & SwatchProps> = React.memo(
     color = '',
     label = null,
     variant = 'size',
+    disabled = false,
     ...props
   }) => {
     variant = variant?.toLowerCase()
@@ -36,6 +38,7 @@ const Swatch: React.FC<Omit<ButtonProps, 'variant'> & SwatchProps> = React.memo(
         [s.size]: variant === 'size',
         [s.dark]: color ? isDark(color) : false,
         [s.textLabel]: !color && label && label.length > 3,
+        [s.disabled]: disabled,
       },
       className
     )
@@ -47,6 +50,7 @@ const Swatch: React.FC<Omit<ButtonProps, 'variant'> & SwatchProps> = React.memo(
         {...(label && color && { title: label })}
         style={color ? { backgroundColor: color } : {}}
         {...props}
+        disabled={disabled}
       >
         {color && active && (
           <span>
@@ -58,5 +62,7 @@ const Swatch: React.FC<Omit<ButtonProps, 'variant'> & SwatchProps> = React.memo(
     )
   }
 )
+
+Swatch.displayName = 'Swatch'
 
 export default Swatch
