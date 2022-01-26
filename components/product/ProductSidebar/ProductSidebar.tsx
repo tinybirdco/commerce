@@ -18,6 +18,24 @@ interface ProductSidebarProps {
   className?: string
 }
 
+const getStock = (selectedSize, stockPerSize) => {
+  if (stockPerSize.data) {
+    const stock = stockPerSize.data.find(
+      (prod) => prod.product_size.toString() === selectedSize
+    )
+
+    if (stock) {
+      if (stock.available_stock === 1) {
+        return 'Last unit available'
+      }
+
+      return `${stock.available_stock} units available`
+    }
+  }
+
+  return ''
+}
+
 const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
   const [selectedOptions, setSelectedOptions] = useState<SelectedOptions>({})
 
@@ -50,44 +68,42 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
                               label: d.product_size.toString(),
                               disabled: !d.available_stock,
                             }))
-                          : [{ label: 'One Size' }],
+                          : [{ label: 'Sold out', disabled: true }],
                     },
                   ]}
                   selectedOptions={selectedOptions}
                   setSelectedOptions={setSelectedOptions}
                 />
-              ) : (
-                0
-              )}
-              <Collapse title="Stock">
-                {stockPerSize && stockPerSize.data
-                  ? stockPerSize.data.map((d) => (
-                      <div key={d.product_size}>
-                        {`Size: ${d.product_size}  Available units: ${d.available_stock}`}
-                      </div>
-                    ))
-                  : 0}
-              </Collapse>
+              ) : null}
+              <p className="h-6">
+                {getStock(selectedOptions.size, stockPerSize)}
+              </p>
             </div>
           )}
         </Data>
-        <Collapse title="Views">
-          <Data
-            host={API_URL}
-            token={API_TOKEN}
-            pipe={'demo_views_per_partnumber'}
-            parameters={[
-              { name: 'partnumber', type: 'string', defaultValue: product.id },
-            ]}
-          >
-            {(state) => (
-              <div>
-                {state && state.data ? state.data[0].views : 0} views in the
-                last 24h
-              </div>
-            )}
-          </Data>
-        </Collapse>
+        <div className="mt-3">
+          <Collapse title="Views">
+            <Data
+              host={API_URL}
+              token={API_TOKEN}
+              pipe={'demo_views_per_partnumber'}
+              parameters={[
+                {
+                  name: 'partnumber',
+                  type: 'string',
+                  defaultValue: product.id,
+                },
+              ]}
+            >
+              {(state) => (
+                <div>
+                  {state && state.data ? state.data[0].views : 0} views in the
+                  last 24h
+                </div>
+              )}
+            </Data>
+          </Collapse>
+        </div>
       </div>
     </div>
   )
