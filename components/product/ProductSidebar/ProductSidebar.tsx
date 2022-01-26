@@ -4,9 +4,7 @@ import { FC, useEffect, useState } from 'react'
 import { ProductOptions } from '@components/product'
 import type { Product } from '@commerce/types/product'
 import { Text, Collapse, useUI } from '@components/ui'
-import {
-  SelectedOptions,
-} from '../helpers'
+import { SelectedOptions } from '../helpers'
 import Data from '@components/common/Data'
 
 const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API
@@ -46,10 +44,13 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
                     {
                       displayName: 'Size',
                       id: 'option-size',
-                      values: stockPerSize.data.map((d) => ({
-                        label: d.product_size.toString(),
-                        disabled: !d.available_stock,
-                      })),
+                      values:
+                        stockPerSize.data.lenght > 0
+                          ? stockPerSize.data.map((d) => ({
+                              label: d.product_size.toString(),
+                              disabled: !d.available_stock,
+                            }))
+                          : [{ label: 'One Size' }],
                     },
                   ]}
                   selectedOptions={selectedOptions}
