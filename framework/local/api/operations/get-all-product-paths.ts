@@ -16,9 +16,11 @@ export default function getAllProductPathsOperation() {
 
     if (res?.data) {
       const { data } = res
-      const productPaths = data.map((product) => ({
-        path: `/${product.path}`,
-      }))
+      const productPaths = data
+        .map((product) => ({
+          path: `/${product.path}`,
+        }))
+        .slice(0, 2000)
 
       return { products: productPaths }
     } else {
