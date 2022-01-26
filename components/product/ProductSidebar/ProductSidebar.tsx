@@ -45,7 +45,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
                       displayName: 'Size',
                       id: 'option-size',
                       values:
-                        stockPerSize.data.lenght > 0
+                        stockPerSize.data.length > 0
                           ? stockPerSize.data.map((d) => ({
                               label: d.product_size.toString(),
                               disabled: !d.available_stock,
