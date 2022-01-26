@@ -41,11 +41,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
 
   return (
     <div className={className}>
-      <Text
-        className="pb-4 break-words w-full max-w-xl"
-        html={product.descriptionHtml || product.description}
-      />
-      <div className="mt-6">
+      <div className="mb-12">
         <Data
           host={API_STOCK_URL}
           token={API_STOCK_TOKEN}
@@ -81,29 +77,29 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
             </div>
           )}
         </Data>
-        <div className="mt-3">
-          <Collapse title="Views">
-            <Data
-              host={API_URL}
-              token={API_TOKEN}
-              pipe={'demo_views_per_partnumber'}
-              parameters={[
-                {
-                  name: 'partnumber',
-                  type: 'string',
-                  defaultValue: product.id,
-                },
-              ]}
-            >
-              {(state) => (
-                <div>
-                  {state && state.data ? state.data[0].views : 0} views in the
-                  last 24h
-                </div>
-              )}
-            </Data>
-          </Collapse>
-        </div>
+      </div>
+      <div className="mt-6">
+        <Data
+          host={API_URL}
+          token={API_TOKEN}
+          pipe={'demo_views_per_partnumber'}
+          parameters={[
+            {
+              name: 'partnumber',
+              type: 'string',
+              defaultValue: product.id,
+            },
+          ]}
+        >
+          {(state) => (
+            <p className="text-accent-5 text-sm">
+              {state && state.data
+                ? new Intl.NumberFormat('en-IN').format(state.data[0].views)
+                : 0}{' '}
+              views in the last 24h
+            </p>
+          )}
+        </Data>
       </div>
     </div>
   )

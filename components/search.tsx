@@ -15,8 +15,8 @@ import getSlug from '@lib/get-slug'
 import rangeMap from '@lib/range-map'
 
 const SORT = {
-  hits: 'Top visits',
   sales: 'Top sales',
+  hits: 'Top visits',
 }
 
 const LIMIT = ['50', '100', '150']
