@@ -84,7 +84,32 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
           pipe={'demo_views_per_partnumber'}
           parameters={[
             {
-              name: 'partnuπmber',
+              name: 'partnumber',
+              type: 'string',
+              defaultValue: product.id,
+            },
+          ]}
+          refreshInterval={4000}
+        >
+          {(state) => (
+            <p className="text-accent-5 text-sm">
+              {state && state.data
+                ? new Intl.NumberFormat('en-IN').format(state.data[0].views)
+                : 0}{' '}
+              visits in the last 24h{' '}
+              {state && state.loading && <LoadingDots />}
+            </p>
+          )}
+        </Data>
+      </div>
+      <div className="mt-6">
+        <Data
+          host={API_URL}
+          token={API_TOKEN}
+          pipe={'demo_cart_exploration'}
+          parameters={[
+            {
+              name: 'partnumber',
               type: 'string',
               defaultValue: product.id,
             },
@@ -93,10 +118,10 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
         >
           {(state) => (
             <p className="text-accent-5 text-sm">
-              {state && state.data
-                ? new Intl.NumberFormat('en-IN').format(state.data[0].views)
+              Added to {state && state.data
+                ? new Intl.NumberFormat('en-IN').format(state.data[0].carts)
                 : 0}{' '}
-              visits in the last 24h{' '}
+              carts in the last 24h{' '}
               {state && state.loading && <LoadingDots />}
             </p>
           )}
