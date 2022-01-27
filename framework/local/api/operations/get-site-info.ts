@@ -23,38 +23,66 @@ export default function getSiteInfoOperation({}: OperationContext<any>) {
     return Promise.resolve({
       categories: [
         {
-          id: 'women',
-          name: 'Women',
-          slug: 'women',
-          path: '/women',
+          id: 'mujer',
+          name: 'Mujer',
+          slug: 'mujer',
+          path: '/mujer',
         },
         {
-          id: 'men',
-          name: 'Men',
-          slug: 'men',
-          path: '/men',
+          id: 'hombre',
+          name: 'Hombre',
+          slug: 'hombre',
+          path: '/hombre',
         },
       ],
       brands: [
         {
           node: {
-            entityId: 'shirts',
-            name: 'Shirts',
-            path: `brands/shirts`,
+            entityId: 'abrigos',
+            name: 'Abrigos',
+            path: `brands/abrigos`,
           },
         },
         {
           node: {
-            entityId: 'trousers',
-            name: 'Trousers',
-            path: `brands/trousers`,
+            entityId: 'blazers',
+            name: 'Blazers',
+            path: `brands/blazers`,
           },
         },
         {
           node: {
-            entityId: 'shoes',
-            name: 'Shoes',
-            path: `brands/shoes`,
+            entityId: 'camisas',
+            name: 'Camisas',
+            path: `brands/camisas`,
+          },
+        },
+        {
+          node: {
+            entityId: 'camisetas',
+            name: 'Camisetas',
+            path: `brands/camisetas`,
+          },
+        },
+        {
+          node: {
+            entityId: 'sudaderas',
+            name: 'Sudaderas',
+            path: `brands/sudaderas`,
+          },
+        },
+        {
+          node: {
+            entityId: 'pantalones',
+            name: 'Pantalones',
+            path: `brands/pantalones`,
+          },
+        },
+        {
+          node: {
+            entityId: 'zapatos',
+            name: 'Zapatos',
+            path: `brands/zapatos`,
           },
         },
       ],
