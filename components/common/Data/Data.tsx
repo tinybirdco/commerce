@@ -11,21 +11,30 @@ export default function Data(props: {
   pipe: string
   format?: string
   sql?: string
-  parameters?: Array<{ name: string, type: string, defaultValue?: string }>
+  parameters?: Array<{ name: string; type: string; defaultValue?: string }>
   queryParameters?: Record<string, string>
   children: ReactNode | ReactNode[]
+  refreshInterval?: Number
 }) {
   const [loading, setLoading] = useState(null)
   const [error, setError] = useState(null)
   const [data, setData] = useState(null)
   const [meta, setMeta] = useState(null)
+  const [intervalProcess, setIntervalProcess] = useState(null)
+
+  function _refreshInterval() {
+    const newInterval = setInterval(_fetchData, props.refreshInterval)
+    setIntervalProcess(newInterval)
+  }
 
   async function _fetchData() {
     setLoading(true)
     setError(false)
 
     const dataURL = new URL(
-      `${props.host || API_URL}${PIPES_PATHNAME}/${props.pipe}.${props.format || DEFAULT_FORMAT}`
+      `${props.host || API_URL}${PIPES_PATHNAME}/${props.pipe}.${
+        props.format || DEFAULT_FORMAT
+      }`
     )
 
     let queryParams = new URLSearchParams(`token=${props.token}`)
@@ -46,9 +55,9 @@ export default function Data(props: {
     }
 
     const res = await fetch(`${dataURL}?${queryParams.toString()}`)
-      .then(response => response.json())
-      .then(data => data)
-      .catch(err => ({ error: err.toString() }))
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch((err) => ({ error: err.toString() }))
 
     setLoading(false)
     setError(res.error)
@@ -57,10 +66,15 @@ export default function Data(props: {
   }
 
   useEffectOnUpdate(() => {
+    if (props.refreshInterval) {
+      clearInterval(intervalProcess)
+      _refreshInterval()
+    }
     _fetchData()
   }, [props.parameters, props.queryParameters])
 
   useEffect(() => {
+    props.refreshInterval && _refreshInterval()
     _fetchData()
   }, [])
 

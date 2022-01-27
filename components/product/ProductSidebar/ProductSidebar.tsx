@@ -1,11 +1,10 @@
 import s from './ProductSidebar.module.css'
-import { useAddItem } from '@framework/cart'
-import { FC, useEffect, useState } from 'react'
+import { FC, useState } from 'react'
 import { ProductOptions } from '@components/product'
 import type { Product } from '@commerce/types/product'
-import { Text, Collapse, useUI } from '@components/ui'
 import { SelectedOptions } from '../helpers'
 import Data from '@components/common/Data'
+import { LoadingDots } from '@components/ui'
 
 const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API
 const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN
@@ -85,18 +84,20 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
           pipe={'demo_views_per_partnumber'}
           parameters={[
             {
-              name: 'partnumber',
+              name: 'partnuπmber',
               type: 'string',
               defaultValue: product.id,
             },
           ]}
+          refreshInterval={10000}
         >
           {(state) => (
             <p className="text-accent-5 text-sm">
               {state && state.data
                 ? new Intl.NumberFormat('en-IN').format(state.data[0].views)
                 : 0}{' '}
-              views in the last 24h
+              views in the last 24h{' '}
+              {state && state.loading && <LoadingDots />}
             </p>
           )}
         </Data>
