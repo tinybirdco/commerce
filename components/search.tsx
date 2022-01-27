@@ -271,128 +271,120 @@ export default function Search({ categories, brands }: SearchPropsType) {
         </div>
         {/* Products */}
         <div className="col-span-8 order-3 lg:order-none">
-          {(q || activeCategory || activeBrand) && (
-            <div className="mb-12 transition ease-in duration-75">
-              {data ? (
-                <>
-                  <div
-                    className={cn(
-                      {
-                        hidden: !data.found,
-                      },
-                      'flex items-center pt-1'
-                    )}
-                  >
-                    Showing{' '}
-                    <div className="relative ml-3">
-                      <div>
-                        <span className="rounded-md shadow-sm">
-                          <button
-                            type="button"
-                            onClick={(e) => handleClick(e, 'limit')}
-                            className="flex justify-between rounded-sm border border-accent-3 px-4 py-3 bg-accent-0 text-sm leading-5 font-medium text-accent-4 hover:text-accent-5 focus:outline-none focus:border-blue-300 focus:shadow-outline-normal active:bg-accent-1 active:text-accent-8 transition ease-in-out duration-150"
-                            id="options-menu"
-                            aria-haspopup="true"
-                            aria-expanded="true"
+          <div className="mb-12 transition ease-in duration-75">
+            {data ? (
+              <>
+                <div
+                  className={cn(
+                    {
+                      hidden: !data.found,
+                    },
+                    'flex items-center pt-1'
+                  )}
+                >
+                  Showing{' '}
+                  <div className="relative ml-3">
+                    <div>
+                      <span className="rounded-md shadow-sm">
+                        <button
+                          type="button"
+                          onClick={(e) => handleClick(e, 'limit')}
+                          className="flex justify-between rounded-sm border border-accent-3 px-4 py-3 bg-accent-0 text-sm leading-5 font-medium text-accent-4 hover:text-accent-5 focus:outline-none focus:border-blue-300 focus:shadow-outline-normal active:bg-accent-1 active:text-accent-8 transition ease-in-out duration-150"
+                          id="options-menu"
+                          aria-haspopup="true"
+                          aria-expanded="true"
+                        >
+                          {data.products.length} results
+                          <svg
+                            className="-mr-1 ml-2 h-5 w-5"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
                           >
-                            {data.products.length} results
-                            <svg
-                              className="-mr-1 ml-2 h-5 w-5"
-                              xmlns="http://www.w3.org/2000/svg"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                            >
-                              <path
-                                fillRule="evenodd"
-                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                clipRule="evenodd"
-                              />
-                            </svg>
-                          </button>
-                        </span>
-                      </div>
-                      <div
-                        className={`absolute mt-2 w-full rounded-md shadow-lg z-30 mb-10 ${
-                          activeFilter !== 'limit' || toggleFilter !== true
-                            ? 'hidden'
-                            : ''
-                        }`}
-                      >
-                        <div className="rounded-sm bg-accent-0 shadow-xs">
-                          <div
-                            role="menu"
-                            aria-orientation="vertical"
-                            aria-labelledby="options-menu"
-                          >
-                            <ul>
-                              {LIMIT.map((key: string) => (
-                                <li
-                                  key={key}
-                                  className={cn(
-                                    'block text-sm leading-5 text-accent-4 hover:bg-accent-1 lg:hover:bg-transparent hover:text-accent-8 focus:outline-none focus:bg-accent-1 focus:text-accent-8',
-                                    {
-                                      underline: limit === key,
-                                    }
-                                  )}
+                            <path
+                              fillRule="evenodd"
+                              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </button>
+                      </span>
+                    </div>
+                    <div
+                      className={`absolute mt-2 w-full rounded-md shadow-lg z-30 mb-10 ${
+                        activeFilter !== 'limit' || toggleFilter !== true
+                          ? 'hidden'
+                          : ''
+                      }`}
+                    >
+                      <div className="rounded-sm bg-accent-0 shadow-xs">
+                        <div
+                          role="menu"
+                          aria-orientation="vertical"
+                          aria-labelledby="options-menu"
+                        >
+                          <ul>
+                            {LIMIT.map((key: string) => (
+                              <li
+                                key={key}
+                                className={cn(
+                                  'block text-sm leading-5 text-accent-4 hover:bg-accent-1 lg:hover:bg-transparent hover:text-accent-8 focus:outline-none focus:bg-accent-1 focus:text-accent-8',
+                                  {
+                                    underline: limit === key,
+                                  }
+                                )}
+                              >
+                                <Link
+                                  href={{
+                                    pathname,
+                                    query: filterQuery({
+                                      q,
+                                      limit: key,
+                                      sort,
+                                    }),
+                                  }}
                                 >
-                                  <Link
-                                    href={{
-                                      pathname,
-                                      query: filterQuery({
-                                        q,
-                                        limit: key,
-                                        sort,
-                                      }),
-                                    }}
+                                  <a
+                                    onClick={(e) => handleClick(e, 'limit')}
+                                    className={
+                                      'block lg:inline-block px-4 py-2 lg:p-0 lg:my-2 lg:mx-4'
+                                    }
                                   >
-                                    <a
-                                      onClick={(e) => handleClick(e, 'limit')}
-                                      className={
-                                        'block lg:inline-block px-4 py-2 lg:p-0 lg:my-2 lg:mx-4'
-                                      }
-                                    >
-                                      {key} results
-                                    </a>
-                                  </Link>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
+                                    {key} results
+                                  </a>
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
                         </div>
                       </div>
-                    </div>{' '}
-                    {q && (
-                      <>
-                        for "<strong>{q}</strong>"
-                      </>
-                    )}
-                  </div>
-                  <span
-                    className={cn('animated', {
-                      fadeIn: !data.found,
-                      hidden: data.found,
-                    })}
-                  >
-                    {q ? (
-                      <>
-                        There are no products that match "<strong>{q}</strong>"
-                      </>
-                    ) : (
-                      <>
-                        There are no products that match the selected category.
-                      </>
-                    )}
-                  </span>
-                </>
-              ) : q ? (
-                <>
-                  Searching for: "<strong>{q}</strong>"
-                </>
-              ) : (
-                <>Searching...</>
-              )}
-            </div>
-          )}
+                    </div>
+                  </div>{' '}
+                  {q && (
+                    <>
+                      for "<strong>{q}</strong>"
+                    </>
+                  )}
+                </div>
+                <span
+                  className={cn('animated', {
+                    fadeIn: !data.found,
+                    hidden: data.found,
+                  })}
+                >
+                  {q ? (
+                    <>
+                      There are no products that match "<strong>{q}</strong>"
+                    </>
+                  ) : (
+                    <>There are no products that match the selected category.</>
+                  )}
+                </span>
+              </>
+            ) : (
+              <>Searching...</>
+            )}
+          </div>
           {data ? (
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {data.products.map((product: Product) => (
