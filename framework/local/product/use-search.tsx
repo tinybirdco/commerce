@@ -12,7 +12,7 @@ export const handler: SWRHook<any> = {
   },
   async fetcher({ input }) {
     const { brandId, categoryId, sort, limit } = input
-    let url = `${API_URL}/v0/pipes/demo_purchase_prods_fast.json?token=${API_TOKEN}&limit_prods=${
+    let url = `${API_URL}/v0/pipes/demo_ranking_products.json?token=${API_TOKEN}&limit_prods=${
       limit ? `${limit}` : '100'
     }`
 

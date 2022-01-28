@@ -15,7 +15,7 @@ import getSlug from '@lib/get-slug'
 import rangeMap from '@lib/range-map'
 
 const SORT = {
-  hits: 'Top visits',
+  visits: 'Top visits',
   sales: 'Top sales',
 }
 

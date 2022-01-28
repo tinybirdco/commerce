@@ -89,7 +89,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
               defaultValue: product.id,
             },
           ]}
-          refreshInterval={4000}
+          refreshInterval={3000}
         >
           {(state) => (
             <p className="text-accent-5 text-sm">
@@ -106,7 +106,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
         <Data
           host={API_URL}
           token={API_TOKEN}
-          pipe={'demo_cart_exploration'}
+          pipe={'demo_carts_per_partnumber'}
           parameters={[
             {
               name: 'partnumber',
@@ -114,11 +114,11 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
               defaultValue: product.id,
             },
           ]}
-          refreshInterval={10000}
+          refreshInterval={9000}
         >
           {(state) => (
-            <p className="text-accent-5 text-sm">
-              Added to {state && state.data
+            <p className="text-accent-5 text-sm">              
+              Added to {state && state.data && !!state.data[0]
                 ? new Intl.NumberFormat('en-IN').format(state.data[0].carts)
                 : 0}{' '}
               carts in the last 24h{' '}
