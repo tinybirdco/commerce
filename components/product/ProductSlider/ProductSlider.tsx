@@ -138,7 +138,8 @@ const ProductSlider: React.FC<ProductSliderProps> = ({
                   onClick: () => {
                     console.log(child.props['data-image'], child.props['data-product'])
                     sendEvent({
-                      image: child.props['data-image'],
+                      event: 'click-product-image',
+                      image: child.props['data-image'].replace('https://static.zara.net/photos/',''),
                       product: child.props['data-product'],
                     })
                     tinybird('click-product-image', {
