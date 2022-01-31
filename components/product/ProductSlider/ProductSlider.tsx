@@ -13,6 +13,23 @@ import s from './ProductSlider.module.css'
 import ProductSliderControl from '../ProductSliderControl'
 import { useTinybird } from '@tinybirdco/next-tinybird'
 
+async function sendEvent(event: object) {
+  const date = new Date();
+  event = {
+    'date': date.toISOString(),
+    ...event
+  }
+  const headers = {
+    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_TOKEN}`,
+  }
+  const rawResponse = await fetch('https://api.tinybird.co/v0/events?name=testhfi', {
+    method: 'POST',
+    body: JSON.stringify(event),
+    headers: headers,
+  });
+  const content = await rawResponse.json();
+  console.log(content)
+}
 
 interface ProductSliderProps {
   children: React.ReactNode[]
@@ -97,9 +114,8 @@ const ProductSlider: React.FC<ProductSliderProps> = ({
               ...child,
               props: {
                 ...child.props,
-                className: `${
-                  child.props.className ? `${child.props.className} ` : ''
-                }keen-slider__slide`,
+                className: `${child.props.className ? `${child.props.className} ` : ''
+                  }keen-slider__slide`,
               },
             }
           }
@@ -120,7 +136,11 @@ const ProductSlider: React.FC<ProductSliderProps> = ({
                   }),
                   id: `thumb-${idx}`,
                   onClick: () => {
-                    console.log(child.props['data-image'],child.props['data-product'])
+                    console.log(child.props['data-image'], child.props['data-product'])
+                    sendEvent({
+                      image: child.props['data-image'],
+                      product: child.props['data-product'],
+                    })
                     tinybird('click-product-image', {
                       image: child.props['data-image'],
                       product: child.props['data-product'],
