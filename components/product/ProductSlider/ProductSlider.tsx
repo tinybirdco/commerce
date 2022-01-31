@@ -11,6 +11,8 @@ import cn from 'classnames'
 import { a } from '@react-spring/web'
 import s from './ProductSlider.module.css'
 import ProductSliderControl from '../ProductSliderControl'
+import { useTinybird } from '@tinybirdco/next-tinybird'
+
 
 interface ProductSliderProps {
   children: React.ReactNode[]
@@ -117,6 +119,10 @@ const ProductSlider: React.FC<ProductSliderProps> = ({
                   }),
                   id: `thumb-${idx}`,
                   onClick: () => {
+                    tinybird('click-product-image', {
+                      image: child.props['data-image'],
+                      product: child.props['data-product'],
+                    })
                     slider.moveToSlideRelative(idx)
                   },
                 },
