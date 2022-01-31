@@ -19,10 +19,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <TinybirdProvider
-      api={API_TRACKER_URL}
-      trackerURL={API_TRACKER_URL}
-      dataSource={'events'}
-      token={API_TRACKER_TOKEN}
+    dataSource={String('test')}      
+    token={String(API_TRACKER_TOKEN)}
     >
       <>
         <Head />
@@ -35,3 +33,4 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     </TinybirdProvider>
   )
 }
+

@@ -27,6 +27,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({
   const [isMounted, setIsMounted] = useState(false)
   const sliderContainerRef = useRef<HTMLDivElement>(null)
   const thumbsContainerRef = useRef<HTMLDivElement>(null)
+  const tinybird = useTinybird()
 
   const [ref, slider] = useKeenSlider<HTMLDivElement>({
     loop: true,
@@ -119,6 +120,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({
                   }),
                   id: `thumb-${idx}`,
                   onClick: () => {
+                    console.log(child.props['data-image'],child.props['data-product'])
                     tinybird('click-product-image', {
                       image: child.props['data-image'],
                       product: child.props['data-product'],
