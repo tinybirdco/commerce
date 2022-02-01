@@ -10,12 +10,34 @@ import { ProductSlider, ProductCard } from '@components/product'
 import { Container, Text } from '@components/ui'
 import ProductSidebar from '../ProductSidebar'
 import ProductTag from '../ProductTag'
+import Data from '@components/common/Data'
+
 interface ProductViewProps {
   product: Product
   relatedProducts: Product[]
 }
 
+const IMAGES_URL = process.env.NEXT_PUBLIC_IMAGE_RANKING_URL
+const IMAGES_TOKEN = process.env.NEXT_PUBLIC_IMAGE_RANKING_TOKEN
+
+
+
+
 const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
+  const getSortedImages = (data) => {
+    const defaultRanking = product.images.length - data.length
+  
+    return product.images
+      .map((image) => {
+        const index = data.findIndex((rankingImage) => rankingImage.url === image.url)
+  
+        return {
+          ...image,
+          ranking: index >= 0 ? index + 1 : defaultRanking
+        }
+      })
+      .sort((a, b) => a.ranking - b.ranking)
+  }
   const { price } = usePrice({
     amount: product.price.value,
     baseAmount: product.price.retailPrice,
@@ -29,25 +51,43 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
           <div className={cn(s.main, 'fit')}>
             <ProductTag name={product.name} price={`${price}`} fontSize={32} />
             <div className={s.sliderContainer}>
-              <ProductSlider key={product.id}>
-                {product.images.map((image, i) => (
-                  <div 
-                    key={image.url}
-                    className={s.imageContainer}
-                    data-image={image.url}
-                    data-product={product.id}>
-                    <Image
-                      className={s.img}
-                      src={image.url!}
-                      alt={image.alt || 'Product Image'}
-                      width={600}
-                      height={600}
-                      priority={i === 0}
-                      quality="85"
-                    />
-                  </div>
-                ))}
-              </ProductSlider>
+              <Data
+                host={IMAGES_URL}
+                token={IMAGES_TOKEN}
+                pipe={'most_clicked_image'}
+                parameters={[
+                  {
+                    name: 'partnumber',
+                    type: 'string',
+                    defaultValue: product.id,
+                  },
+                ]}
+              >
+                {(props: { data: Array<any>, error: string, meta: Array<any>, loading: Boolean }) => {
+                  const sortedImages = props && props.data
+                    ? getSortedImages(props.data)
+                    : product.images 
+
+                  return <ProductSlider key={product.id}>
+                    {sortedImages.map((image, i) => (
+                      <div key={image.url}
+                        className={s.imageContainer}
+                        data-image={image.url}
+                        data-product={product.id}>
+                        <Image
+                          className={s.img}
+                          src={image.url}
+                          alt={image.alt || 'Product Image'}
+                          width={600}
+                          height={600}
+                          priority={i === 0}
+                          quality="85"
+                        />
+                      </div>
+                    ))}
+                  </ProductSlider>
+                }}
+              </Data>
             </div>
             {process.env.COMMERCE_WISHLIST_ENABLED && (
               <WishlistButton
