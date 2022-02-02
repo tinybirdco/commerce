@@ -96,7 +96,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
               {state && state.data
                 ? new Intl.NumberFormat('en-IN').format(state.data[0].views)
                 : 0}{' '}
-              visits in the last 24h{' '}
+              visits in the last 15 mins{' '}
               {state && state.loading && <LoadingDots />}
             </p>
           )}

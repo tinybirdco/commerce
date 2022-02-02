@@ -11,7 +11,6 @@ import cn from 'classnames'
 import { a } from '@react-spring/web'
 import s from './ProductSlider.module.css'
 import ProductSliderControl from '../ProductSliderControl'
-import { useTinybird } from '@tinybirdco/next-tinybird'
 
 async function sendEvent(event: object) {
   const date = new Date();
@@ -22,7 +21,7 @@ async function sendEvent(event: object) {
   const headers = {
     'Authorization': `Bearer ${process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_TOKEN}`,
   }
-  const rawResponse = await fetch('https://api.tinybird.co/v0/events?name=testhfi', {
+  const rawResponse = await fetch(`${process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_API}/v0/events?name=images_ranking`, {
     method: 'POST',
     body: JSON.stringify(event),
     headers: headers,
@@ -44,7 +43,6 @@ const ProductSlider: React.FC<ProductSliderProps> = ({
   const [isMounted, setIsMounted] = useState(false)
   const sliderContainerRef = useRef<HTMLDivElement>(null)
   const thumbsContainerRef = useRef<HTMLDivElement>(null)
-  const tinybird = useTinybird()
 
   const [ref, slider] = useKeenSlider<HTMLDivElement>({
     loop: true,
@@ -136,14 +134,9 @@ const ProductSlider: React.FC<ProductSliderProps> = ({
                   }),
                   id: `thumb-${idx}`,
                   onClick: () => {
-                    console.log(child.props['data-image'], child.props['data-product'])
                     sendEvent({
                       event: 'click-product-image',
                       image: child.props['data-image'].replace('https://static.zara.net/photos/',''),
-                      product: child.props['data-product'],
-                    })
-                    tinybird('click-product-image', {
-                      image: child.props['data-image'],
                       product: child.props['data-product'],
                     })
                     slider.moveToSlideRelative(idx)

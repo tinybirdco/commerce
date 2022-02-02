@@ -17,8 +17,8 @@ interface ProductViewProps {
   relatedProducts: Product[]
 }
 
-const IMAGES_URL = process.env.NEXT_PUBLIC_IMAGE_RANKING_URL
-const IMAGES_TOKEN = process.env.NEXT_PUBLIC_IMAGE_RANKING_TOKEN
+const IMAGES_URL = process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_API
+const IMAGES_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_TOKEN
 
 
 
