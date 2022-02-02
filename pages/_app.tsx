@@ -9,9 +9,6 @@ import { ManagedUIContext } from '@components/ui/context'
 
 const Noop: FC = ({ children }) => <>{children}</>
 
-const API_TRACKER_URL = process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_API
-const API_TRACKER_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_TOKEN
-
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const Layout = (Component as any).Layout || Noop
