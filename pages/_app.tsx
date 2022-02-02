@@ -6,7 +6,6 @@ import { FC, useEffect } from 'react'
 import type { AppProps } from 'next/app'
 import { Head } from '@components/common'
 import { ManagedUIContext } from '@components/ui/context'
-import TinybirdProvider, { useTinybird } from '@tinybirdco/next-tinybird'
 
 const Noop: FC = ({ children }) => <>{children}</>
 
@@ -18,10 +17,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   const Layout = (Component as any).Layout || Noop
 
   return (
-    <TinybirdProvider
-    dataSource={String('test')}      
-    token={String(API_TRACKER_TOKEN)}
-    >
       <>
         <Head />
         <ManagedUIContext>
@@ -30,7 +25,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           </Layout>
         </ManagedUIContext>
       </>
-    </TinybirdProvider>
   )
 }
 
