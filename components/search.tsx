@@ -15,8 +15,8 @@ import getSlug from '@lib/get-slug'
 import rangeMap from '@lib/range-map'
 
 const SORT = {
-  visits: 'Top visits',
-  sales: 'Top sales',
+  visits: 'Top visits last 15 min',
+  sales: 'Top sales last 24h',
 }
 
 const LIMIT = ['50', '100', '150']
@@ -469,7 +469,7 @@ export default function Search({ categories, brands }: SearchPropsType) {
                             'block lg:inline-block px-4 py-2 lg:p-0 lg:my-2 lg:mx-4'
                           }
                         >
-                          <p>Sort by</p><sub>values for the last 24h</sub>
+                          <p>Sort by</p>
                         </a>
                       </Link>
                     </li>
