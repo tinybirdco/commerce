@@ -11,24 +11,7 @@ import cn from 'classnames'
 import { a } from '@react-spring/web'
 import s from './ProductSlider.module.css'
 import ProductSliderControl from '../ProductSliderControl'
-
-async function sendEvent(event: object) {
-  const date = new Date();
-  event = {
-    'date': date.toISOString(),
-    ...event
-  }
-  const headers = {
-    'Authorization': `Bearer ${process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_TOKEN}`,
-  }
-  const rawResponse = await fetch(`${process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_API}/v0/events?name=images_ranking`, {
-    method: 'POST',
-    body: JSON.stringify(event),
-    headers: headers,
-  });
-  const content = await rawResponse.json();
-  console.log(content)
-}
+import { useTinybird } from '@tinybirdco/next-tinybird'
 
 interface ProductSliderProps {
   children: React.ReactNode[]
@@ -43,6 +26,7 @@ const ProductSlider: React.FC<ProductSliderProps> = ({
   const [isMounted, setIsMounted] = useState(false)
   const sliderContainerRef = useRef<HTMLDivElement>(null)
   const thumbsContainerRef = useRef<HTMLDivElement>(null)
+  const tinybird = useTinybird()
 
   const [ref, slider] = useKeenSlider<HTMLDivElement>({
     loop: true,
@@ -112,8 +96,9 @@ const ProductSlider: React.FC<ProductSliderProps> = ({
               ...child,
               props: {
                 ...child.props,
-                className: `${child.props.className ? `${child.props.className} ` : ''
-                  }keen-slider__slide`,
+                className: `${
+                  child.props.className ? `${child.props.className} ` : ''
+                }keen-slider__slide`,
               },
             }
           }
@@ -134,9 +119,11 @@ const ProductSlider: React.FC<ProductSliderProps> = ({
                   }),
                   id: `thumb-${idx}`,
                   onClick: () => {
-                    sendEvent({
-                      event: 'click-product-image',
-                      image: child.props['data-image'].replace('https://static.zara.net/photos/',''),
+                    tinybird('click-product-image', {
+                      image: child.props['data-image'].replace(
+                        'https://static.zara.net/photos/',
+                        ''
+                      ),
                       product: child.props['data-product'],
                     })
                     slider.moveToSlideRelative(idx)
