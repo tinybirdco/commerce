@@ -1,13 +1,13 @@
 import cn from 'classnames'
 import type { SearchPropsType } from '@lib/search-props'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
 import { Layout } from '@components/common'
 import { ProductCard } from '@components/product'
 import type { Product } from '@commerce/types/product'
-import { Container, Skeleton } from '@components/ui'
+import { Container, Skeleton, Input } from '@components/ui'
 
 import useSearch from '@framework/product/use-search'
 
@@ -18,8 +18,8 @@ const SORT = {
   visits: 'Top visits last 15 min',
   sales: 'Top sales last 24h',
 }
-
 const LIMIT = ['50', '100', '150']
+const REFRESH = 10000
 
 import {
   filterQuery,
@@ -31,10 +31,11 @@ import {
 export default function Search({ categories, brands }: SearchPropsType) {
   const [activeFilter, setActiveFilter] = useState('')
   const [toggleFilter, setToggleFilter] = useState(false)
-
+  const [refresh, setRefresh] = useState(false)
+  const [lastRefresh, setLastRefresh] = useState(0)
   const router = useRouter()
   const { asPath, locale } = router
-  const { q, sort, limit = 100 } = router.query
+  const { q, sort, limit = '100' } = router.query
   // `q` can be included but because categories and designers can't be searched
   // in the same way of products, it's better to ignore the search input if one
   // of those is selected
@@ -42,7 +43,6 @@ export default function Search({ categories, brands }: SearchPropsType) {
 
   const { pathname, category, brand } = useSearchMeta(asPath)
   const activeCategory = categories.find((cat: any) => cat.slug === category)
-  const activeLimit = 100
   const activeBrand = brands.find(
     (b: any) => getSlug(b.node.path) === `brands/${brand}`
   )?.node
@@ -54,6 +54,7 @@ export default function Search({ categories, brands }: SearchPropsType) {
     sort: typeof sort === 'string' ? sort : '',
     limit: typeof limit === 'string' ? limit : '',
     locale,
+    lastRefresh,
   })
 
   const handleClick = (event: any, filter: string) => {
@@ -64,6 +65,18 @@ export default function Search({ categories, brands }: SearchPropsType) {
     }
     setActiveFilter(filter)
   }
+
+  useEffect(() => {
+    let interval
+
+    if (refresh) {
+      setLastRefresh(new Date().valueOf())
+      interval = setInterval(() => {
+        setLastRefresh(new Date().valueOf())
+      }, REFRESH)
+    }
+    return () => interval && clearInterval(interval)
+  }, [sort, limit, category, pathname, brand, refresh])
 
   return (
     <Container>
@@ -470,6 +483,7 @@ export default function Search({ categories, brands }: SearchPropsType) {
                           }
                         >
                           <p>Sort by</p>
+                          <sub>values for the last 24h</sub>
                         </a>
                       </Link>
                     </li>
@@ -504,6 +518,20 @@ export default function Search({ categories, brands }: SearchPropsType) {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="flex mt-5">
+            <input
+              onChange={(e) => setRefresh(!refresh)}
+              id="refresh"
+              type="checkbox"
+              className={'lg:ml-4 mr-2 mt-1'}
+            />
+            <label
+              htmlFor="refresh"
+              className="text-sm leading-5 text-accent-4 hover:bg-accent-1 lg:hover:bg-transparent hover:text-accent-8 focus:outline-none focus:bg-accent-1 focus:text-accent-8"
+            >
+              Auto Refresh
+            </label>
           </div>
         </div>
       </div>

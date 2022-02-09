@@ -58,6 +58,7 @@ export const handler: SWRHook<any> = {
           ['brandId', input.brandId],
           ['sort', input.sort],
           ['limit', input.limit],
+          ['lastRefresh', input.lastRefresh],
         ],
         swrOptions: {
           revalidateOnFocus: false,
