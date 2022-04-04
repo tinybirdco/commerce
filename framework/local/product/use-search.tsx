@@ -3,8 +3,11 @@ import useSearch, { UseSearch } from '@commerce/product/use-search'
 
 export default useSearch as UseSearch<typeof handler>
 
-const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API
-const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN
+// const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API
+// const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN
+
+const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API_2
+const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN_2
 
 export const handler: SWRHook<any> = {
   fetchOptions: {
@@ -13,7 +16,7 @@ export const handler: SWRHook<any> = {
   async fetcher({ input }) {
     const { brandId, categoryId, sort, limit } = input
     let url = `${API_URL}/v0/pipes/demo_ranking_products.json?token=${API_TOKEN}&limit_prods=${
-      limit ? `${limit}` : '100'
+      limit ? `${limit}` : '50'
     }`
 
     if (brandId) {

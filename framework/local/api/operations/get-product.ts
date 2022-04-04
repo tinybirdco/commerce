@@ -4,8 +4,11 @@ import { GetProductOperation } from '@commerce/types/product'
 import type { OperationContext } from '@commerce/api/operations'
 import data from '../../data.json'
 
-const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API
-const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN
+// const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API
+// const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN
+
+const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API_2
+const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN_2
 
 export default function getProductOperation({
   commerce,
@@ -23,9 +26,10 @@ export default function getProductOperation({
     let product = data.products.find(({ slug }) => slug === variables!.slug)
   
     if(!product) {
-      const url = `${API_URL}/v0/pipes/demo_product_details.json?token=${API_TOKEN}&partnumber=${
+      const url = `${API_URL}/v0/pipes/demo_product_details.json?token=${API_TOKEN}&property_id=${
         variables!.slug
       }`
+      console.log(url)
   
       const { res, error } = await fetch(url)
         .then((res) => res.json())
@@ -34,9 +38,13 @@ export default function getProductOperation({
   
       if (res?.data) {
         const { data } = res
+        console.log(data[0])
         product = data[0]
-        product.price = { value: product.basic_price }
-        product.id = product.partnumber
+        product.name = product.title
+        product.price = { value: product.ppm }
+        product.id = product.id
+        product.images = product.photos.map(e => ({ url: e }))
+
       } else {
         console.log(error)
         return Promise.reject(error)
