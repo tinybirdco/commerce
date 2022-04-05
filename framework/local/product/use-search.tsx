@@ -20,10 +20,10 @@ export const handler: SWRHook<any> = {
     }`
 
     if (brandId) {
-      url += `&product=${brandId}`
+      url += `&property_type=${brandId}`
     }
     if (categoryId) {
-      url += `&section=${categoryId}`
+      url += `&city=${categoryId}`
     }
     if (sort) {
       url += `&ranking=${sort}`

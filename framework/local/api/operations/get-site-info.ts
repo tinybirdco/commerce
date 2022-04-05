@@ -23,68 +23,40 @@ export default function getSiteInfoOperation({}: OperationContext<any>) {
     return Promise.resolve({
       categories: [
         {
-          id: 'mujer',
-          name: 'Mujer',
-          slug: 'mujer',
-          path: '/mujer',
+          id: 'barcelona',
+          name: 'Barcelona',
+          slug: 'barcelona',
+          path: '/barcelona',
         },
         {
-          id: 'hombre',
-          name: 'Hombre',
-          slug: 'hombre',
-          path: '/hombre',
+          id: 'granada',
+          name: 'Granada',
+          slug: 'granada',
+          path: '/granada',
+        },
+        {
+          id: 'madrid',
+          name: 'Madrid',
+          slug: 'madrid',
+          path: '/madrid',
         },
       ],
       brands: [
         {
           node: {
-            entityId: 'abrigos',
-            name: 'Abrigos',
-            path: `brands/abrigos`,
+            entityId: 'apartment',
+            name: 'Apartment',
+            path: `brands/apartment`,
           },
         },
         {
           node: {
-            entityId: 'blazers',
-            name: 'Blazers',
-            path: `brands/blazers`,
+            entityId: 'studio',
+            name: 'Studio',
+            path: `brands/studio`,
           },
         },
-        {
-          node: {
-            entityId: 'camisas',
-            name: 'Camisas',
-            path: `brands/camisas`,
-          },
-        },
-        {
-          node: {
-            entityId: 'camisetas',
-            name: 'Camisetas',
-            path: `brands/camisetas`,
-          },
-        },
-        {
-          node: {
-            entityId: 'sudaderas',
-            name: 'Sudaderas',
-            path: `brands/sudaderas`,
-          },
-        },
-        {
-          node: {
-            entityId: 'pantalones',
-            name: 'Pantalones',
-            path: `brands/pantalones`,
-          },
-        },
-        {
-          node: {
-            entityId: 'zapatos',
-            name: 'Zapatos',
-            path: `brands/zapatos`,
-          },
-        },
+        
       ],
     })
   }

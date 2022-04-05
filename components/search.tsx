@@ -16,7 +16,7 @@ import rangeMap from '@lib/range-map'
 
 const SORT = {
   visits: 'Top visits last 15 min',
-  sales: 'Top sales last 24h',
+  shared: 'Top shared last 24h',
 }
 const LIMIT = ['50', '100', '150']
 const REFRESH = 10000
@@ -82,13 +82,13 @@ export default function Search({ categories, brands }: SearchPropsType) {
     <Container>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mt-3 mb-20">
         <div className="col-span-8 lg:col-span-2 order-1 lg:order-none">
-          {/* Categories */}
+          {/* Cities */}
           <div className="relative inline-block w-full">
             <div className="lg:hidden">
               <span className="rounded-md shadow-sm">
                 <button
                   type="button"
-                  onClick={(e) => handleClick(e, 'categories')}
+                  onClick={(e) => handleClick(e, 'cities')}
                   className="flex justify-between w-full rounded-sm border border-accent-3 px-4 py-3 bg-accent-0 text-sm leading-5 font-medium text-accent-4 hover:text-accent-5 focus:outline-none focus:border-blue-300 focus:shadow-outline-normal active:bg-accent-1 active:text-accent-8 transition ease-in-out duration-150"
                   id="options-menu"
                   aria-haspopup="true"
@@ -143,7 +143,7 @@ export default function Search({ categories, brands }: SearchPropsType) {
                             'block lg:inline-block px-4 py-2 lg:p-0 lg:my-2 lg:mx-4'
                           }
                         >
-                          Sections
+                          City
                         </a>
                       </Link>
                     </li>
@@ -164,7 +164,7 @@ export default function Search({ categories, brands }: SearchPropsType) {
                           }}
                         >
                           <a
-                            onClick={(e) => handleClick(e, 'categories')}
+                            onClick={(e) => handleClick(e, 'cities')}
                             className={
                               'block lg:inline-block px-4 py-2 lg:p-0 lg:my-2 lg:mx-4'
                             }
@@ -483,7 +483,6 @@ export default function Search({ categories, brands }: SearchPropsType) {
                           }
                         >
                           <p>Sort by</p>
-                          <sub>values for the last 24h</sub>
                         </a>
                       </Link>
                     </li>
