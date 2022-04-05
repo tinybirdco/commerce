@@ -29,7 +29,7 @@ export default function getProductOperation({
       const url = `${API_URL}/v0/pipes/demo_product_details.json?token=${API_TOKEN}&property_id=${
         variables!.slug
       }`
-      console.log(url)
+      // console.log(url)
   
       const { res, error } = await fetch(url)
         .then((res) => res.json())
@@ -38,7 +38,7 @@ export default function getProductOperation({
   
       if (res?.data) {
         const { data } = res
-        console.log(data[0])
+        // console.log(data[0])
         product = data[0]
         product.name = product.title
         product.price = { value: product.ppm }

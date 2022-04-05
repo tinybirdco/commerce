@@ -17,8 +17,8 @@ interface ProductViewProps {
   relatedProducts: Product[]
 }
 
-const IMAGES_URL = process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_API
-const IMAGES_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TRACKER_TOKEN
+const IMAGES_URL = process.env.NEXT_PUBLIC_TINYBIRD_API_2
+const IMAGES_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN_2
 
 
 
@@ -104,30 +104,6 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
             className={s.sidebar}
           />
         </div>
-        <hr className="mt-7 border-accent-2" />
-        <section className="py-12 px-6 mb-10">
-          <Text variant="sectionHeading">Related Products</Text>
-          <div className={s.relatedProductsGrid}>
-            {relatedProducts.map((p) => (
-              <div
-                key={p.path}
-                className="animated fadeIn bg-accent-0 border border-accent-2"
-              >
-                <ProductCard
-                  noNameTag
-                  product={p}
-                  key={p.path}
-                  variant="simple"
-                  className="animated fadeIn"
-                  imgProps={{
-                    width: 300,
-                    height: 300,
-                  }}
-                />
-              </div>
-            ))}
-          </div>
-        </section>
       </Container>
       <NextSeo
         title={product.name}

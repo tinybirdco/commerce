@@ -6,11 +6,15 @@ import { SelectedOptions } from '../helpers'
 import Data from '@components/common/Data'
 import { LoadingDots } from '@components/ui'
 
-const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API
-const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN
+// const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API
+// const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN
 
 const API_STOCK_URL = process.env.NEXT_PUBLIC_TINYBIRD_PRODUCTION_API
 const API_STOCK_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_PRODUCTION_TOKEN
+
+const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API_2
+const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN_2
+
 
 interface ProductSidebarProps {
   product: Product
@@ -40,43 +44,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
 
   return (
     <div className={className}>
-      <div className="mb-12">
-        <Data
-          host={API_STOCK_URL}
-          token={API_STOCK_TOKEN}
-          pipe={'demo_stock_per_product'}
-          parameters={[
-            { name: 'partnumber', type: 'string', defaultValue: product.id },
-          ]}
-        >
-          {(stockPerSize) => (
-            <div>
-              {stockPerSize && stockPerSize.data ? (
-                <ProductOptions
-                  options={[
-                    {
-                      displayName: 'Size',
-                      id: 'option-size',
-                      values:
-                        stockPerSize.data.length > 0
-                          ? stockPerSize.data.map((d) => ({
-                              label: d.product_size.toString(),
-                              disabled: !d.available_stock,
-                            }))
-                          : [{ label: 'Sold out', disabled: true }],
-                    },
-                  ]}
-                  selectedOptions={selectedOptions}
-                  setSelectedOptions={setSelectedOptions}
-                />
-              ) : null}
-              <p className="h-6">
-                {getStock(selectedOptions.size, stockPerSize)}
-              </p>
-            </div>
-          )}
-        </Data>
-      </div>
+      Details
       <div className="mt-6">
         <Data
           host={API_URL}
@@ -96,7 +64,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
               {state && state.data
                 ? new Intl.NumberFormat('en-IN').format(state.data[0].views)
                 : 0}{' '}
-              visits in the last 15 mins{' '}
+              views in the last 15 mins{' '}
               {state && state.loading && <LoadingDots />}
             </p>
           )}
@@ -118,10 +86,10 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
         >
           {(state) => (
             <p className="text-accent-5 text-sm">              
-              Added to {state && state.data && !!state.data[0]
+              Shared {state && state.data && !!state.data[0]
                 ? new Intl.NumberFormat('en-IN').format(state.data[0].carts)
                 : 0}{' '}
-              carts in the last 24h{' '}
+              times in the last 24h{' '}
               {state && state.loading && <LoadingDots />}
             </p>
           )}
