@@ -26,7 +26,7 @@ export default function getProductOperation({
     let product = data.products.find(({ slug }) => slug === variables!.slug)
   
     if(!product) {
-      const url = `${API_URL}/v0/pipes/demo_product_details.json?token=${API_TOKEN}&property_id=${
+      const url = `${API_URL}/v0/pipes/property_details.json?token=${API_TOKEN}&property_id=${
         variables!.slug
       }`
       // console.log(url)
