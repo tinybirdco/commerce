@@ -87,7 +87,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
           {(state) => (
             <p className="text-accent-5 text-sm">              
               Sold {state && state.data && !!state.data[0]
-                ? new Intl.NumberFormat('en-IN').format(state.data[0].times_shared)
+                ? new Intl.NumberFormat('en-IN').format(state.data[0].times_sold)
                 : 0}{' '}
               times in the last 24h{' '}
               {state && state.loading && <LoadingDots />}
