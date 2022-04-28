@@ -49,10 +49,10 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
         <Data
           host={API_URL}
           token={API_TOKEN}
-          pipe={'api_views_property'}
+          pipe={'api_views_item'}
           parameters={[
             {
-              name: 'property_id',
+              name: 'item_id',
               type: 'string',
               defaultValue: product.id,
             },
@@ -74,10 +74,10 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
         <Data
           host={API_URL}
           token={API_TOKEN}
-          pipe={'api_shared_property'}
+          pipe={'api_sold_item'}
           parameters={[
             {
-              name: 'property_id',
+              name: 'item_id',
               type: 'string',
               defaultValue: product.id,
             },
@@ -86,7 +86,7 @@ const ProductSidebar: FC<ProductSidebarProps> = ({ product, className }) => {
         >
           {(state) => (
             <p className="text-accent-5 text-sm">              
-              Shared {state && state.data && !!state.data[0]
+              Sold {state && state.data && !!state.data[0]
                 ? new Intl.NumberFormat('en-IN').format(state.data[0].times_shared)
                 : 0}{' '}
               times in the last 24h{' '}

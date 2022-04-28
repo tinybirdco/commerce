@@ -57,7 +57,7 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
                 pipe={'most_clicked_image'}
                 parameters={[
                   {
-                    name: 'partnumber',
+                    name: 'product_id',
                     type: 'string',
                     defaultValue: product.id,
                   },

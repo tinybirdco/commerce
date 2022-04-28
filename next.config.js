@@ -18,7 +18,7 @@ module.exports = withCommerceConfig({
     defaultLocale: 'en-US',
   },
   images: {
-    domains: ['static.zara.net','d1052pu3rm1xk9.cloudfront.net'],
+    domains: ['static.zara.net','d1052pu3rm1xk9.cloudfront.net','www.exoticca.com'],
   },
   rewrites() {
     return [

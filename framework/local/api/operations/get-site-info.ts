@@ -23,37 +23,64 @@ export default function getSiteInfoOperation({}: OperationContext<any>) {
     return Promise.resolve({
       categories: [
         {
-          id: 'barcelona',
-          name: 'Barcelona',
-          slug: 'barcelona',
-          path: '/barcelona',
+          id: 'tours',
+          name: 'Tours',
+          slug: 'tours',
+          path: '/tours',
         },
         {
-          id: 'granada',
-          name: 'Granada',
-          slug: 'granada',
-          path: '/granada',
+          id: 'nature',
+          name: 'Nature',
+          slug: 'nature',
+          path: '/nature',
         },
         {
-          id: 'madrid',
-          name: 'Madrid',
-          slug: 'madrid',
-          path: '/madrid',
+          id: 'cities',
+          name: 'Cities',
+          slug: 'cities',
+          path: '/cities',
+        },
+        {
+          id: 'beaches',
+          name: 'Beaches',
+          slug: 'beaches',
+          path: '/beaches',
         },
       ],
       brands: [
         {
           node: {
-            entityId: 'apartment',
-            name: 'Apartment',
-            path: `brands/apartment`,
+            entityId: 'africa',
+            name: 'Africa',
+            path: `brands/africa`,
           },
         },
         {
           node: {
-            entityId: 'studio',
-            name: 'Studio',
-            path: `brands/studio`,
+            entityId: 'america',
+            name: 'Americas',
+            path: `brands/america`,
+          },
+        },
+        {
+          node: {
+            entityId: 'asia',
+            name: 'Asia',
+            path: `brands/asia`,
+          },
+        },
+        {
+          node: {
+            entityId: 'europe',
+            name: 'Europe',
+            path: `brands/europe`,
+          },
+        },
+        {
+          node: {
+            entityId: 'safaris',
+            name: 'Safaris',
+            path: `brands/safaris`,
           },
         },
         

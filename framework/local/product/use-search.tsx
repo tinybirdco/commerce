@@ -20,10 +20,10 @@ export const handler: SWRHook<any> = {
     }`
 
     if (brandId) {
-      url += `&property_type=${brandId}`
+      url += `&subcateg=${brandId}`
     }
     if (categoryId) {
-      url += `&city=${categoryId}`
+      url += `&categ=${categoryId}`
     }
     if (sort) {
       url += `&ranking=${sort}`
@@ -39,7 +39,7 @@ export const handler: SWRHook<any> = {
       const products = data.map((product) => ({
         ...product,
         price: { value: product.basic_price },
-        slug: product.partnumber,
+        slug: product.id,
         images: [{ url: product.image }],
       }))
 

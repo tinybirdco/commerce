@@ -16,7 +16,7 @@ import rangeMap from '@lib/range-map'
 
 const SORT = {
   visits: 'Top visits last 15 min',
-  shared: 'Top shared last 24h',
+  sales: 'Top sales last 24h',
 }
 const LIMIT = ['50', '100', '150']
 const REFRESH = 10000
@@ -143,7 +143,7 @@ export default function Search({ categories, brands }: SearchPropsType) {
                             'block lg:inline-block px-4 py-2 lg:p-0 lg:my-2 lg:mx-4'
                           }
                         >
-                          City
+                          Category
                         </a>
                       </Link>
                     </li>
@@ -244,7 +244,7 @@ export default function Search({ categories, brands }: SearchPropsType) {
                             'block lg:inline-block px-4 py-2 lg:p-0 lg:my-2 lg:mx-4'
                           }
                         >
-                          Property type
+                          Subcategory
                         </a>
                       </Link>
                     </li>
