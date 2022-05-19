@@ -17,6 +17,8 @@ interface Props {
 }
 
 const placeholderImg = '/product-img-placeholder.svg'
+const API_URL = process.env.NEXT_PUBLIC_TINYBIRD_API_2
+const API_TOKEN = process.env.NEXT_PUBLIC_TINYBIRD_TOKEN_2
 
 const ProductCard: FC<Props> = ({
   product,
@@ -37,8 +39,28 @@ const ProductCard: FC<Props> = ({
     className
   )
 
+  const handleClick = async (event: any, filter: string) => {
+    const date = new Date();
+    const evento = {
+      'timestamp': date.toISOString(),
+      'article_id': product.partnumber
+    }
+
+    const headers = {
+      'Authorization': `Bearer ${API_TOKEN}`
+    }
+
+    let url = `${API_URL}/v0/events?name=clicks`
+
+    const rawResponse = await fetch(`${url}`, {
+      method: 'POST',
+      body: JSON.stringify(evento),
+      headers: headers,
+    });
+  }
+
   return (
-    <Link href={`/product/${product.slug}`}>
+    <div onClick={(e) => handleClick(e, product.partnumber)}>
       <a className={rootClassName}>
         {variant === 'slim' && (
           <>
@@ -76,6 +98,21 @@ const ProductCard: FC<Props> = ({
                 <div className={s.price}>{`${price}`}</div>
               </div>
             )}
+            {!noNameTag && (
+              <div className={s.header} style={{
+                right: '0px',
+                left: 'auto',
+                paddingRight: '0px'
+              }}>
+                <div className={s.price} style={{
+                paddingRight: '0.2em',
+                paddingLeft: '0.2em',
+                paddingBottom: '0.2em',
+                fontSize: '0.75em',
+                left: 'auto'
+              }}>{`${product.total} clicks`}</div>
+              </div>
+            )}            
             <div className={s.imageContainer}>
               {product?.images && (
                 <Image
@@ -120,7 +157,7 @@ const ProductCard: FC<Props> = ({
           </>
         )}
       </a>
-    </Link>
+    </div>
   )
 }
 

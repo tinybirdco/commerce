@@ -39,6 +39,7 @@ export const handler: SWRHook<any> = {
       const products = data.map((product) => ({
         ...product,
         price: { value: product.basic_price },
+        partnumber: product.partnumber,
         slug: product.id,
         images: [{ url: product.image }],
       }))

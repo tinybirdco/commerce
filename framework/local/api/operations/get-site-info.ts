@@ -23,28 +23,16 @@ export default function getSiteInfoOperation({}: OperationContext<any>) {
     return Promise.resolve({
       categories: [
         {
-          id: 'tours',
-          name: 'Tours',
-          slug: 'tours',
-          path: '/tours',
+          id: 'shoes',
+          name: 'Shoes',
+          slug: 'shoes',
+          path: '/shoes',
         },
         {
-          id: 'nature',
-          name: 'Nature',
-          slug: 'nature',
-          path: '/nature',
-        },
-        {
-          id: 'cities',
-          name: 'Cities',
-          slug: 'cities',
-          path: '/cities',
-        },
-        {
-          id: 'beaches',
-          name: 'Beaches',
-          slug: 'beaches',
-          path: '/beaches',
+          id: 'shirts',
+          name: 'Shirts',
+          slug: 'shirt',
+          path: '/shirt',
         },
       ],
       brands: [

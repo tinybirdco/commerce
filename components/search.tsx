@@ -15,7 +15,7 @@ import getSlug from '@lib/get-slug'
 import rangeMap from '@lib/range-map'
 
 const SORT = {
-  visits: 'Top visits last 15 min',
+  clicks: 'Top clicks last 15 min',
   sales: 'Top sales last 24h',
 }
 const LIMIT = ['50', '100', '150']
@@ -223,7 +223,7 @@ export default function Search({ categories, brands }: SearchPropsType) {
                   aria-orientation="vertical"
                   aria-labelledby="options-menu"
                 >
-                  <ul>
+                  {/*<ul>
                     <li
                       className={cn(
                         'block text-sm leading-5 text-accent-4 lg:text-base lg:no-underline lg:font-bold lg:tracking-wide hover:bg-accent-1 lg:hover:bg-transparent hover:text-accent-8 focus:outline-none focus:bg-accent-1 focus:text-accent-8',
@@ -276,7 +276,7 @@ export default function Search({ categories, brands }: SearchPropsType) {
                         </Link>
                       </li>
                     ))}
-                  </ul>
+                          </ul>*/}
                 </div>
               </div>
             </div>
