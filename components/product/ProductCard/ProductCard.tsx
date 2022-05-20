@@ -42,7 +42,6 @@ const ProductCard: FC<Props> = ({
   )
 
   const handleClick = async (event: any, filter: string) => {
-    alert(sort)
     const date = new Date();
     const evento = {
       'timestamp': date.toISOString(),
