@@ -14,6 +14,7 @@ interface Props {
   noNameTag?: boolean
   imgProps?: Omit<ImageProps, 'src' | 'layout' | 'placeholder' | 'blurDataURL'>
   variant?: 'default' | 'slim' | 'simple'
+  sort?: string
 }
 
 const placeholderImg = '/product-img-placeholder.svg'
@@ -26,6 +27,7 @@ const ProductCard: FC<Props> = ({
   className,
   noNameTag = false,
   variant = 'default',
+  sort = 'sales',
 }) => {
   const { price } = usePrice({
     amount: parseInt(product.price.value),
@@ -40,6 +42,7 @@ const ProductCard: FC<Props> = ({
   )
 
   const handleClick = async (event: any, filter: string) => {
+    alert(sort)
     const date = new Date();
     const evento = {
       'timestamp': date.toISOString(),
@@ -110,7 +113,9 @@ const ProductCard: FC<Props> = ({
                 paddingBottom: '0.2em',
                 fontSize: '0.75em',
                 left: 'auto'
-              }}>{`${product.total} clicks`}</div>
+              }}>
+                {`${product.total}${(sort === 'sales')?'$':' clicks'}`}
+                </div>
               </div>
             )}            
             <div className={s.imageContainer}>

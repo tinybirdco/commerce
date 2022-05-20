@@ -15,7 +15,7 @@ import getSlug from '@lib/get-slug'
 import rangeMap from '@lib/range-map'
 
 const SORT = {
-  clicks: 'Top clicks last 15 min',
+  clicks: 'Top clicks last 2h',
   sales: 'Top sales last 24h',
 }
 const LIMIT = ['50', '100', '150']
@@ -403,6 +403,7 @@ export default function Search({ categories, brands }: SearchPropsType) {
               {data.products.map((product: Product) => (
                 <ProductCard
                   variant="simple"
+                  sort={sort}
                   key={product.path}
                   className="animated fadeIn"
                   product={product}
